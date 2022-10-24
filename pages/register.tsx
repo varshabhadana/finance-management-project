@@ -2,10 +2,29 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
 
-const headingStyles = css`
-  background-color: red;
-  font-size: 55px;
-  color: pink;
+const formStyle = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-direction: column;
+`;
+const ButtonStyle = css`
+  width: 100%;
+  font-size: 16px;
+  padding: 5px;
+  padding: 15px 32px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #1366e7;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #64748b;
+  }
 `;
 
 type Form = {
@@ -36,8 +55,9 @@ export default function Register() {
         <title>Create Account</title>
         <meta name="description" content="Create a new account " />
       </Head>
-      <h1 css={headingStyles}>Create Account</h1>
+      <h1>Create Account</h1>
       <form
+        css={formStyle}
         onSubmit={(event) => {
           event.preventDefault();
           setFormValues(initialFormValues);
@@ -79,7 +99,9 @@ export default function Register() {
           onChange={handleChange}
           required
         />
-        <button type="submit">Register</button>
+        <button css={ButtonStyle} type="submit">
+          Register
+        </button>
         <h3>Already have an account Login</h3>
       </form>
     </>

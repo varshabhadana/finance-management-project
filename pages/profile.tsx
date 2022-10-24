@@ -2,15 +2,16 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 type Avatar = string[];
-export default function Setup() {
+
+export default function Profile() {
   const avatars: Avatar = ['youngboy', 'younggirl'];
   return (
     <>
       <Head>
-        <title>Setup Profile</title>
+        <title>Profile</title>
         <meta name="description" content="Setup your profile" />
       </Head>
-      <h2>Welcome !</h2>
+      <h1>Welcome !</h1>
       <div>1. Choose your avatar</div>
       {avatars.map((el) => {
         return (

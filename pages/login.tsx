@@ -2,8 +2,21 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
 
-const headingstyles = css`
-  background-color: red;
+const containerStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const formStyle = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 500px;
+  height: 400px;
 `;
 type loginForm = {
   email: string;
@@ -28,34 +41,42 @@ export default function login() {
         <title>Login</title>
         <meta name="description" content="Login To Your Account" />
       </Head>
-      <p>Doesn't have an account yet? Sign Up</p>
-      <h1 css={headingstyles}>Login</h1>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          setLoginForm(initailValues);
-        }}
-      >
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          value={loginForm.email}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="text"
-          id="password"
-          name="password"
-          value={loginForm.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+      <div css={containerStyles}>
+        <p>Doesn't have an account yet? Sign Up</p>
+        <h1>Login</h1>
+        <form
+          css={formStyle}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setLoginForm(initailValues);
+          }}
+        >
+          <label htmlFor="email">Email</label>
+          <div>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              value={loginForm.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <label htmlFor="password">Password</label>
+          <div>
+            <input
+              type="text"
+              id="password"
+              name="password"
+              value={loginForm.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </>
   );
 }
