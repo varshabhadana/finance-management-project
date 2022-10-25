@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
+import { getCategories } from '../database/categories';
 
 const formStyle = css`
   display: flex;
@@ -9,17 +10,14 @@ const formStyle = css`
   flex-direction: column;
   width: 800px;
 `;
-const incomeCategories = [
-  { name: 'Salary' },
-  { name: 'Rent' },
-  { name: 'Loan' },
-  { name: 'Investment' },
-  { name: 'Business' },
-];
+
 type Form = {
   amount: number;
   date: string;
   description: string;
+};
+type Props = {
+  Incomecategories: { name: string }[];
 };
 const initialValue = {
   amount: 0,
@@ -27,7 +25,7 @@ const initialValue = {
   description: '',
 };
 
-export default function Income() {
+export default function Income(props: Props) {
   const [incomeValues, setIncomeValues] = useState<Form>(initialValue);
 
   // handle change function
@@ -52,7 +50,7 @@ export default function Income() {
         }}
       >
         <label>1. Select a Category</label>
-        {incomeCategories.map((el) => {
+        {props.Incomecategories.map((el) => {
           return <div key={el.name}>{el.name}</div>;
         })}
         <label>2. Enter Amount</label>
@@ -83,4 +81,14 @@ export default function Income() {
       </form>
     </>
   );
+}
+export async function getServerSideProps() {
+  const Incomecategories = await getCategories('Income');
+  console.log('cat', Incomecategories);
+
+  return {
+    props: {
+      Incomecategories: Incomecategories,
+    },
+  };
 }
