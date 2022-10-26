@@ -35,6 +35,7 @@ export default async function handler(
     const passwordHash = await bcrypt.hash(request.body.password, 12);
 
     // 4. sql query to create the record (new user)
+
     const newUser = await createUser(
       request.body.email,
       passwordHash,

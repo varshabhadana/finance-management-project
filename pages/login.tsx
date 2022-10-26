@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
+import { LoginResponseBody } from './api/login';
 
 const containerStyles = css`
   display: flex;
@@ -41,10 +42,9 @@ export default function login() {
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(),
+      body: JSON.stringify(loginForm),
     });
-    const registerResponseBody = await loginResponse.json();
-    console.log(registerResponseBody);
+    const loginResponseBody = (await loginResponse.json()) as LoginResponseBody;
   }
   return (
     <>

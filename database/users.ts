@@ -47,7 +47,7 @@ export async function createUser(
 }
 
 //
-export async function getUserwithPasswordhashandemail(email: string) {
+export async function getUserwithPasswordHashAndEmail(email: string) {
   if (!email) return undefined;
   const [user] = await sql<User[]>`
   SELECT
