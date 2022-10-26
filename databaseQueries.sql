@@ -43,3 +43,18 @@ VALUES
 
 --GET all the categories
 SELECT * FROM categories;
+
+-- create Users table
+CREATE TABLE users (
+  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  email varchar(40) NOT NULL UNIQUE,
+  password_hash varchar(70) NOT NULL UNIQUE,
+  first_name varchar (100 ) NOT NULL,
+  last_name varchar(100) NOT NULL,
+  avatar varchar(100) ,
+  notification boolean
+);
+--Inset values into users table (not including avatar anad notification at register)
+INSERT INTO users(email, password_hash, first_name, last_name)
+VALUES
+('testuser@gmail.com','test123', 'test','user');

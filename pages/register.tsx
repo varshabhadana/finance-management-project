@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
+import { RegisterResponseBody } from './api/register';
 
 const formStyle = css`
   display: flex;
@@ -49,6 +50,19 @@ export default function Register() {
       [event.currentTarget.id]: event.currentTarget.value,
     });
   }
+  async function registerHandler() {
+    const registerResponse = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
+    const registerResponseBody =
+      (await registerResponse.json()) as RegisterResponseBody;
+    console.log(registerResponseBody);
+  }
+
   return (
     <>
       <Head>
@@ -99,7 +113,7 @@ export default function Register() {
           onChange={handleChange}
           required
         />
-        <button css={ButtonStyle} type="submit">
+        <button css={ButtonStyle} type="submit" onClick={registerHandler}>
           Register
         </button>
         <h3>Already have an account Login</h3>

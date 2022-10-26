@@ -35,6 +35,17 @@ export default function login() {
       [event.currentTarget.id]: event.currentTarget.value,
     });
   }
+  async function loginHandler() {
+    const loginResponse = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(),
+    });
+    const registerResponseBody = await loginResponse.json();
+    console.log(registerResponseBody);
+  }
   return (
     <>
       <Head>
@@ -74,7 +85,9 @@ export default function login() {
             />
           </div>
 
-          <button type="submit">Login</button>
+          <button type="submit" onClick={loginHandler}>
+            Login
+          </button>
         </form>
       </div>
     </>

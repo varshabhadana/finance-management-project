@@ -6,11 +6,14 @@ export type Categories = {
   createdBy: string;
   type: string;
 };
-export async function getCategories(categoryType: string) {
+export async function getCategoriesByType(type: string, userId: string) {
   const categories = sql<Categories[]>`
-  SELECT name FROM categories
+  SELECT
+    name
+  FROM
+    categories
    WHERE
-    type=${categoryType};
+    type=${type} AND created_by='common' OR created_by=${userId}
   `;
 
   return categories;

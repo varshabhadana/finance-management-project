@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
-import { getCategories } from '../database/categories';
+import { getCategoriesByType } from '../database/categories';
 
 const formStyle = css`
   display: flex;
@@ -83,8 +83,7 @@ export default function Income(props: Props) {
   );
 }
 export async function getServerSideProps() {
-  const Incomecategories = await getCategories('Income');
-  console.log('cat', Incomecategories);
+  const Incomecategories = await getCategoriesByType('Income', '1');
 
   return {
     props: {
