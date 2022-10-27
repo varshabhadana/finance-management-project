@@ -27,6 +27,24 @@ export async function getUserByEmail(email: string) {
 
   return user;
 }
+
+// get user by id
+
+export async function getUserById(id: number) {
+  if (!id) return undefined;
+
+  const [user] = await sql<User[]>`
+  SELECT
+    *
+  FROM
+    users
+  WHERE
+    users.id=${id}
+
+  `;
+
+  return user;
+}
 // function to create new user
 export async function createUser(
   email: string,

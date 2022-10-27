@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import { LoginResponseBody } from './api/login';
 
@@ -19,6 +20,10 @@ const formStyle = css`
   width: 500px;
   height: 400px;
 `;
+const errorsStyles = css`
+  color: red;
+  font-size: 18px;
+`;
 type loginForm = {
   email: string;
   password: string;
@@ -28,7 +33,7 @@ const initailValues = {
   password: '',
 };
 
-export default function login() {
+export default function Login() {
   const [loginForm, setLoginForm] = useState<loginForm>(initailValues);
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setLoginForm({
@@ -36,6 +41,9 @@ export default function login() {
       [event.currentTarget.id]: event.currentTarget.value,
     });
   }
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
+  const router = useRouter();
+
   async function loginHandler() {
     const loginResponse = await fetch('/api/login', {
       method: 'POST',
@@ -45,6 +53,11 @@ export default function login() {
       body: JSON.stringify(loginForm),
     });
     const loginResponseBody = (await loginResponse.json()) as LoginResponseBody;
+    if ('errors' in loginResponseBody) {
+      setErrors(loginResponseBody.errors);
+      return console.log(loginResponseBody.errors);
+    }
+    await router.push('/');
   }
   return (
     <>
@@ -55,6 +68,7 @@ export default function login() {
       <div css={containerStyles}>
         <p>Doesn't have an account yet? Sign Up</p>
         <h1>Login</h1>
+
         <form
           css={formStyle}
           onSubmit={(event) => {
@@ -62,6 +76,13 @@ export default function login() {
             setLoginForm(initailValues);
           }}
         >
+          {errors.map((el) => {
+            return (
+              <p css={errorsStyles} key={el.message}>
+                {el.message}
+              </p>
+            );
+          })}
           <label htmlFor="email">Email</label>
           <div>
             <input

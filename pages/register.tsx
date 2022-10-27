@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { RegisterResponseBody } from './api/register';
 
@@ -27,6 +28,10 @@ const ButtonStyle = css`
     background-color: #64748b;
   }
 `;
+const errorsStyles = css`
+  color: red;
+  font-size: 18px;
+`;
 
 type Form = {
   firstName: string;
@@ -50,6 +55,9 @@ export default function Register() {
       [event.currentTarget.id]: event.currentTarget.value,
     });
   }
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
+  const router = useRouter();
+
   async function registerHandler() {
     const registerResponse = await fetch('/api/register', {
       method: 'POST',
@@ -60,7 +68,11 @@ export default function Register() {
     });
     const registerResponseBody =
       (await registerResponse.json()) as RegisterResponseBody;
-    console.log(registerResponseBody);
+    if ('errors' in registerResponseBody) {
+      setErrors(registerResponseBody.errors);
+      return console.log(registerResponseBody.errors);
+    }
+    await router.push('/');
   }
 
   return (
@@ -70,6 +82,13 @@ export default function Register() {
         <meta name="description" content="Create a new account " />
       </Head>
       <h1>Create Account</h1>
+      {errors.map((el) => {
+        return (
+          <p css={errorsStyles} key={el.message}>
+            {el.message}
+          </p>
+        );
+      })}
       <form
         css={formStyle}
         onSubmit={(event) => {

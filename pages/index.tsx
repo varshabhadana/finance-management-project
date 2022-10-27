@@ -8,6 +8,7 @@ const Home: NextPage = () => {
         <title>Home</title>
         <meta name="description" content="Overview of the app" />
       </Head>
+      <h1>Home Page </h1>
     </div>
   );
 };

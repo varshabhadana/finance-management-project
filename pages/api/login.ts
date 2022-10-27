@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getUserwithPasswordHashAndEmail } from '../../database/users';
 
 export type LoginResponseBody =
-  | { error: { message: string }[] }
+  | { errors: { message: string }[] }
   | { user: { email: string; id: number } };
 
 export default async function handler(
@@ -21,7 +21,7 @@ export default async function handler(
     ) {
       return resposnse
         .status(400)
-        .json({ error: [{ message: 'Email or password not provided' }] });
+        .json({ errors: [{ message: 'Email or password not provided' }] });
     }
     //2. Get the user by email
     const user = await getUserwithPasswordHashAndEmail(request.body.email);
@@ -29,7 +29,7 @@ export default async function handler(
     if (!user) {
       return resposnse
         .status(401)
-        .json({ error: [{ message: 'Email not registered' }] });
+        .json({ errors: [{ message: 'Email is not registered' }] });
     }
 
     // 3. Check if the password and password hash match
@@ -41,9 +41,11 @@ export default async function handler(
     if (!isValidPassword) {
       return resposnse
         .status(401)
-        .json({ error: [{ message: 'Password does not match' }] });
+        .json({ errors: [{ message: 'Password does not match' }] });
     }
 
     resposnse.status(200).json({ user: { email: 'test@gmail.com', id: 1 } });
+  } else {
+    resposnse.status(401).json({ errors: [{ message: 'Method not allowed' }] });
   }
 }
