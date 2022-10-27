@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { LoginResponseBody } from './api/login';
 
@@ -57,7 +57,17 @@ export default function Login() {
       setErrors(loginResponseBody.errors);
       return console.log(loginResponseBody.errors);
     }
-    await router.push('/');
+    const returnTo = router.query.returnTo;
+    if (
+      returnTo &&
+      !Array.isArray(returnTo) && // Security: Validate returnTo parameter against valid path
+      // (because this is untrusted user input)
+      /^\/[a-zA-Z0-9-?=/]*$/.test(returnTo)
+    ) {
+      return await router.push(returnTo);
+    }
+
+    await router.push(`/profile/${loginResponseBody.user.id}`);
   }
   return (
     <>

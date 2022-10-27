@@ -54,7 +54,19 @@ CREATE TABLE users (
   avatar varchar(100) ,
   notification boolean
 );
---Inset values into users table (not including avatar anad notification at register)
+--Insert values into users table (not including avatar anad notification at register)
 INSERT INTO users(email, password_hash, first_name, last_name)
 VALUES
 ('testuser@gmail.com','test123', 'test','user');
+
+--create sessions table
+CREATE TABLE sessions (
+  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  token varchar(110) NOT NULL UNIQUE,
+  expiry_timestamp timestamp NOT NULL DEFAULT NOW()+ INTERVAL '24 hours',
+  user_id integer REFERENCES users(id ) ON DELETE CASCADE
+);
+----Insert values into sessions table
+INSERT INTO sessions(token, user_id)
+VALUES
+()

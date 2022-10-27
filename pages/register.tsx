@@ -72,7 +72,18 @@ export default function Register() {
       setErrors(registerResponseBody.errors);
       return console.log(registerResponseBody.errors);
     }
-    await router.push('/');
+    const returnTo = router.query.returnTo;
+    if (
+      returnTo &&
+      !Array.isArray(returnTo) && // Security: Validate returnTo parameter against valid path
+      // (because this is untrusted user input)
+      /^\/[a-zA-Z0-9-?=/]*$/.test(returnTo)
+    ) {
+      return await router.push(returnTo);
+    }
+    console.log('here...');
+    console.log(`/profile/${registerResponseBody.user.id}`);
+    await router.push(`/profile/${registerResponseBody.user.id}`);
   }
 
   return (

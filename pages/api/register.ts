@@ -1,7 +1,10 @@
+import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { createSession } from '../../database/sessions';
 import { createUser, getUserByEmail } from '../../database/users';
+import { createSreializedRegisterSessionTokenCookie } from '../../utils/cookie';
 
 export type RegisterResponseBody =
   | { errors: { message: string }[] }
@@ -42,8 +45,16 @@ export default async function handler(
       request.body.firstName,
       request.body.lastName,
     );
+    // 5. Create session token and serialize the cookie with the token
+    const token = crypto.randomBytes(80).toString('base64');
+    const session = await createSession(newUser.id, token);
+
+    const serializedCookie = createSreializedRegisterSessionTokenCookie(
+      session.token,
+    );
     resposnse
       .status(200)
+      .setHeader('Set-Cookie', serializedCookie)
       .json({ user: { email: newUser.email, id: newUser.id } });
   } else {
     resposnse.status(401).json({ errors: [{ message: 'Method not allowed' }] });

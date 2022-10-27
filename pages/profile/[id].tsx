@@ -19,11 +19,8 @@ export default function UserProfile(props: Props) {
         <title>User Profile Page</title>
         <meta name="description" content="Information about the user" />
       </Head>
-      {props.id ? (
-        <h1>Hello {props.firstName.toUpperCase()} ,</h1>
-      ) : (
-        <h1>User not found,</h1>
-      )}
+
+      {props.id ? <h1>Hello {props.firstName} ,</h1> : <h1>User not found,</h1>}
     </div>
   );
 }
