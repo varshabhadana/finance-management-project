@@ -19,7 +19,7 @@ export async function createSession(userId: User['id'], token: string) {
   await deleteExpiredSession();
   return session;
 }
-export async function getValidSessionToken(token: Session['token']) {
+export async function getValidSessionByToken(token: Session['token']) {
   const [session] = await sql<Session[]>`
   SELECT
     sessions.id,
@@ -45,4 +45,16 @@ export async function deleteExpiredSession() {
 
   `;
   return sessions;
+}
+export async function deleteSessionByToken(token: string) {
+  const [session] = await sql<Session[]>`
+   DELETE FROM
+    sessions
+  WHERE
+    sessions.token=${token}
+  RETURNING
+    id,
+    token
+  `;
+  return session;
 }

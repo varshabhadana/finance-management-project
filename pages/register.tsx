@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { getValidSessionByToken } from '../database/sessions';
 import { RegisterResponseBody } from './api/register';
 
 const formStyle = css`
@@ -81,9 +83,8 @@ export default function Register() {
     ) {
       return await router.push(returnTo);
     }
-    console.log('here...');
-    console.log(`/profile/${registerResponseBody.user.id}`);
-    await router.push(`/profile/${registerResponseBody.user.id}`);
+
+    await router.push(`/private-profile`);
   }
 
   return (
@@ -150,4 +151,20 @@ export default function Register() {
       </form>
     </>
   );
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const token = context.req.cookies.sessionToken;
+
+  if (token && (await getValidSessionByToken(token))) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: true,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

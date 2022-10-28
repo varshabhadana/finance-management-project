@@ -27,6 +27,8 @@ export default function Header() {
           <Link href="/login">
             <a>Login</a>
           </Link>
+          <Link href="/logout">Logout</Link>
+          <Link href="/private-profile">Private-Profile</Link>
         </div>
       </nav>
     </header>
