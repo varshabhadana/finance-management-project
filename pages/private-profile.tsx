@@ -13,6 +13,9 @@ type Props = {
 };
 
 export default function UserProfile(props: Props) {
+  const firstNameUpperCase =
+    props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);
+
   return (
     <div>
       <Head>
@@ -21,7 +24,7 @@ export default function UserProfile(props: Props) {
       </Head>
 
       {props.id ? (
-        <h1>Hello {props.firstName.toUpperCase()} ,</h1>
+        <h1>Hello {firstNameUpperCase} ,</h1>
       ) : (
         <h1>User not found,</h1>
       )}
@@ -42,15 +45,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-  /* const userId = await getUserBySessionToken(token);
-  console.log(userId);
-  const user = await getUserById(Number(userId));
- */ /*  if (!user) {
-    context.res.statusCode = 404;
-    return {
-      props: {},
-    };
-  } */
+
   return {
     props: {
       ...user,

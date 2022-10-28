@@ -1,18 +1,51 @@
 import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { getValidSessionByToken } from '../database/sessions';
 import { RegisterResponseBody } from './api/register';
 
-const formStyle = css`
+const mainContainer = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  flex-direction: column;
 `;
+
+const containerStyles = css`
+  width: 1000px;
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 32px;
+  padding-left: 40px;
+  padding-right: 40px;
+  h1 {
+    text-align: center;
+  }
+  h3 {
+    text-align: center;
+  }
+`;
+const formStyle = css`
+  display: flex;
+
+  flex-direction: column;
+  width: 100%;
+`;
+const inputStyles = css`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
 const ButtonStyle = css`
   width: 100%;
   font-size: 16px;
@@ -22,6 +55,7 @@ const ButtonStyle = css`
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
+  margin-top: 20px;
   background-color: #1366e7;
   color: #fff;
   cursor: pointer;
@@ -48,8 +82,10 @@ const initialFormValues = {
   email: '',
   password: '',
 };
-
-export default function Register() {
+type Props = {
+  refreshUserProfile: () => Promise<void>;
+};
+export default function Register(props: Props) {
   const [form, setFormValues] = useState<Form>(initialFormValues);
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setFormValues({
@@ -83,17 +119,19 @@ export default function Register() {
     ) {
       return await router.push(returnTo);
     }
+    // refresh the user on state
+    await props.refreshUserProfile();
 
-    await router.push(`/private-profile`);
+    await router.push(`/profile-setup`);
   }
 
   return (
-    <>
+    <div css={mainContainer}>
       <Head>
         <title>Create Account</title>
         <meta name="description" content="Create a new account " />
       </Head>
-      <h1>Create Account</h1>
+
       {errors.map((el) => {
         return (
           <p css={errorsStyles} key={el.message}>
@@ -101,55 +139,68 @@ export default function Register() {
           </p>
         );
       })}
-      <form
-        css={formStyle}
-        onSubmit={(event) => {
-          event.preventDefault();
-          setFormValues(initialFormValues);
-        }}
-      >
-        <label htmlFor="firstName">First Name</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          value={form.firstName}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="lastName">Last Name</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          value={form.lastName}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="text"
-          id="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <button css={ButtonStyle} type="submit" onClick={registerHandler}>
-          Register
-        </button>
-        <h3>Already have an account Login</h3>
-      </form>
-    </>
+      <div css={containerStyles}>
+        <form
+          css={formStyle}
+          onSubmit={(event) => {
+            event.preventDefault();
+            setFormValues(initialFormValues);
+          }}
+        >
+          <h1>Create Account</h1>
+          <label htmlFor="firstName">First Name</label>
+          <input
+            css={inputStyles}
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="Your first name.."
+            value={form.firstName}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            css={inputStyles}
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Your last name.."
+            value={form.lastName}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="email">Email</label>
+          <input
+            css={inputStyles}
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Your email.."
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            css={inputStyles}
+            type="text"
+            id="password"
+            name="password"
+            placeholder="Your password.."
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          <button css={ButtonStyle} type="submit" onClick={registerHandler}>
+            Register
+          </button>
+          <h3>
+            Already have an account ? <Link href={'/login'}>Login</Link>{' '}
+          </h3>
+        </form>
+      </div>
+    </div>
   );
 }
 export async function getServerSideProps(context: GetServerSidePropsContext) {

@@ -1,4 +1,3 @@
-import { FORMERR } from 'dns';
 import { sql } from './connect';
 
 export type User = {
