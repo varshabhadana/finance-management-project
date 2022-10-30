@@ -2,7 +2,9 @@ import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useState } from 'react';
 import { getUserBySessionToken } from '../database/users';
+import { UserResponseBody } from './api/user-account';
 
 type Avatar = string[];
 
@@ -29,10 +31,15 @@ const imageContainerStyles = css`
   align-items: center;
   margin-right: 20px;
 `;
+const selectedImgStyles = css`
+  border-color: #1366e7;
+  border-width: 5px;
+`;
 const imageStyles = css`
   display: flex;
   margin: 22px 0px 20px 0px;
 `;
+
 const ButtonStyle = css`
   width: 100px;
   font-size: 16px;
@@ -51,11 +58,33 @@ const ButtonStyle = css`
     background-color: #64748b;
   }
 `;
+const errorsStyles = css`
+  color: red;
+  font-size: 18px;
+`;
 
 export default function Profile(props: Props) {
   const avatars: Avatar = ['youngboy', 'younggirl'];
   const firstNameUpperCase =
     props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);
+  const [avatar, setAvatar] = useState<string>('');
+  const [notification, setNotification] = useState<boolean>(false);
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
+
+  async function userAccountHandler() {
+    const userResponse = await fetch('/api/user-account', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ avatar, notification, id: props.id }),
+    });
+    const userResponseBody = (await userResponse.json()) as UserResponseBody;
+    if ('errors' in userResponseBody) {
+      setErrors(userResponseBody.errors);
+      return console.log(userResponseBody.errors);
+    }
+  }
 
   return (
     <div css={mainContainerStyles}>
@@ -68,14 +97,21 @@ export default function Profile(props: Props) {
       <div css={imageStyles}>
         {avatars.map((el) => {
           return (
-            <div css={imageContainerStyles} key={el}>
+            <button
+              onClick={() => setAvatar(el)}
+              css={css`
+                ${imageContainerStyles};
+                ${el === avatar && selectedImgStyles}
+              `}
+              key={el}
+            >
               <Image
                 src={`/${el}.svg`}
                 alt={`avatar ${el}`}
                 width={200}
                 height={200}
               />
-            </div>
+            </button>
           );
         })}
       </div>
@@ -87,13 +123,22 @@ export default function Profile(props: Props) {
 
         <input
           type="checkbox"
-          onChange={(event) => {
-            event.currentTarget.checked;
+          onClick={(event) => {
+            setNotification(event.currentTarget.checked);
           }}
         />
       </div>
 
-      <button css={ButtonStyle}>Next</button>
+      <button onClick={userAccountHandler} css={ButtonStyle}>
+        Next
+      </button>
+      {errors.map((el) => {
+        return (
+          <p css={errorsStyles} key={el.message}>
+            {el.message}
+          </p>
+        );
+      })}
     </div>
   );
 }

@@ -70,3 +70,11 @@ CREATE TABLE sessions (
 INSERT INTO sessions(token, user_id)
 VALUES
 ()
+
+--Update value of notification and avatar into Users table
+UPDATE
+    users
+  SET
+    avatar='younggirl', notification=true
+  WHERE
+    users.id=${id}`;

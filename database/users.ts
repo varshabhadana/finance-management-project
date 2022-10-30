@@ -84,7 +84,7 @@ export async function createUser(
   return user;
 }
 
-//
+// to get user with password and email
 export async function getUserwithPasswordHashAndEmail(email: string) {
   if (!email) return undefined;
   const [user] = await sql<User[]>`
@@ -97,5 +97,23 @@ export async function getUserwithPasswordHashAndEmail(email: string) {
 
   `;
 
+  return user;
+}
+// to update user profile
+export async function updateUser(
+  avatar: string,
+  notification: boolean,
+  id: number,
+) {
+  if (!id) return undefined;
+  const [user] = await sql<User[]>`
+  UPDATE
+    users
+  SET
+    avatar=${avatar}, notification=${notification}
+  WHERE
+    users.id=${id}
+    RETURNING id,avatar,notification
+    `;
   return user;
 }
