@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useState } from 'react';
 
 const totalStyles = css`
@@ -35,8 +36,10 @@ export default function transaction() {
           <div> {saving} </div>
         </div>
       </div>
+      <Link href={'/income'}>
+        <button>Add Income</button>
+      </Link>
 
-      <button>Add Income</button>
       <button>Add Expense</button>
     </>
   );

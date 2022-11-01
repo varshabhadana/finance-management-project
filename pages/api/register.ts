@@ -12,7 +12,7 @@ export type RegisterResponseBody =
 
 export default async function handler(
   request: NextApiRequest,
-  resposnse: NextApiResponse<RegisterResponseBody>,
+  response: NextApiResponse<RegisterResponseBody>,
 ) {
   if (request.method === 'POST') {
     // 1. Make sure the data exist
@@ -22,7 +22,7 @@ export default async function handler(
       !request.body.email ||
       !request.body.password
     ) {
-      return resposnse
+      return response
         .status(400)
         .json({ errors: [{ message: 'Email or password not provided' }] });
     }
@@ -30,7 +30,7 @@ export default async function handler(
     const user = await getUserByEmail(request.body.email);
 
     if (user) {
-      return resposnse
+      return response
         .status(401)
         .json({ errors: [{ message: 'This Email is already registered' }] });
     }
@@ -52,11 +52,11 @@ export default async function handler(
     const serializedCookie = createSreializedRegisterSessionTokenCookie(
       session.token,
     );
-    resposnse
+    response
       .status(200)
       .setHeader('Set-Cookie', serializedCookie)
       .json({ user: { email: newUser.email, id: newUser.id } });
   } else {
-    resposnse.status(401).json({ errors: [{ message: 'Method not allowed' }] });
+    response.status(401).json({ errors: [{ message: 'Method not allowed' }] });
   }
 }

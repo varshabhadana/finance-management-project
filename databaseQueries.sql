@@ -64,7 +64,7 @@ CREATE TABLE sessions (
   id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   token varchar(110) NOT NULL UNIQUE,
   expiry_timestamp timestamp NOT NULL DEFAULT NOW()+ INTERVAL '24 hours',
-  user_id integer REFERENCES users(id ) ON DELETE CASCADE
+  user_id integer REFERENCES users(id) ON DELETE CASCADE
 );
 ----Insert values into sessions table
 INSERT INTO sessions(token, user_id)
@@ -77,4 +77,33 @@ UPDATE
   SET
     avatar='younggirl', notification=true
   WHERE
-    users.id=${id}`;
+    users.id=${id}
+     RETURNING id,avatar,notification
+    `;`;
+
+--create Transactions table
+CREATE TABLE transactions(
+  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  user_id integer  NOT NULL,
+  type_id integer NOT NULL,
+  date date NOT NULL,
+  amount NUMERIC(10,2) NOT NULL,
+  description varchar(110),
+  category_id integer NOT NULL
+
+);
+--create Transaction types table
+CREATE TABLE transaction_types(
+  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name varchar(11) NOT NULL);
+
+ ---Insert values into Transaction types table
+ INSERT INTO transaction_types(name)
+ VALUES('income');
+ INSERT INTO transaction_types(name)
+ VALUES('expense');
+
+
+--Update Transactions table
+INSERT INTO transactions(user_id,type_id,date,amount,description,category_id)
+VALUES ()

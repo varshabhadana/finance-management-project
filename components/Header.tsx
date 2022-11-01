@@ -5,7 +5,6 @@ import { User } from './Layout';
 const navStyles = css`
   display: flex;
   justify-content: flex-end;
-
   margin-right: 12px;
   box-shadow: 0 4px 2px -2px #ddd;
   font-weight: bold;
