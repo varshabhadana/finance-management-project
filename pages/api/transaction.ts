@@ -21,7 +21,7 @@ export default async function handler(
     request.body;
   if (request.method === 'POST') {
     // 1. Make sure the data exist
-    console.log(request.body);
+
     if (
       typeof request.body.amount !== 'number' ||
       typeof request.body.date !== 'string' ||

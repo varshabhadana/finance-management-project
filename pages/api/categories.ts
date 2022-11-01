@@ -18,7 +18,6 @@ export default async function handler(
   response: NextApiResponse<any>,
 ) {
   if (request.method === 'GET') {
-    console.log(request.query);
     //Make sure data exists
     if (
       typeof request.query.type !== 'string' ||
@@ -35,9 +34,8 @@ export default async function handler(
       request.query.type,
       request.query.created_by,
     );
-    console.log(categories);
+
     if (categories) {
-      console.log(categories);
       response.status(200).json({ categories: categories });
     }
   }

@@ -3,8 +3,8 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { getUserBySessionToken } from '../database/users';
-import { TransactionResponse } from './api/transaction';
+import { getUserBySessionToken } from '../../database/users';
+import { TransactionResponse } from '../api/transaction';
 
 const formStyle = css`
   display: flex;
@@ -71,6 +71,7 @@ type Props = {
     id: number;
     firstName: string;
   };
+  pageType: string;
 };
 const initialValue = {
   amount: 0,
@@ -104,7 +105,7 @@ export default function Income(props: Props) {
       const response = await fetch(
         '/api/categories?' +
           new URLSearchParams({
-            type: 'Income',
+            type: props.pageType,
             created_by: String(props.user.id),
           }),
         {
@@ -127,7 +128,7 @@ export default function Income(props: Props) {
       const response = await fetch(
         '/api/transaction-types?' +
           new URLSearchParams({
-            name: 'income',
+            name: props.pageType,
           }),
         {
           method: 'GET',
@@ -174,11 +175,11 @@ export default function Income(props: Props) {
   return (
     <div css={mainContainer}>
       <Head>
-        <title>Income</title>
+        <title>{props.pageType}</title>
         <meta name="description" content="Set your income of the day" />
       </Head>
 
-      <h1 css={headingStyles}>Income</h1>
+      <h1 css={headingStyles}>{props.pageType}</h1>
 
       <form
         css={formStyle}
@@ -198,7 +199,6 @@ export default function Income(props: Props) {
         {/*  // aplying map to display categories */}
         <div css={categoryContainer}>
           {categories?.map((el) => {
-            console.log('cat', categories);
             return (
               <button
                 onClick={() => {
@@ -264,11 +264,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
+  const pageType = context.query.type;
+  console.log('page', pageType);
 
   return {
     props: {
-      incomeCategories: [],
       user: user,
+      pageType: pageType,
     },
   };
 }

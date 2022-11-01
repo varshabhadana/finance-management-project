@@ -21,7 +21,6 @@ export default async function handler(
     }
     const transactionTypes = await getTransactionTypeByName(request.query.name);
     if (transactionTypes) {
-      console.log(transactionTypes);
       response
         .status(200)
         .json({ id: transactionTypes.id, name: transactionTypes.name });

@@ -34,7 +34,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       props: {},
     };
   }
-  console.log('user exist', user);
+
   return {
     props: {
       ...user,
