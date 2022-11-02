@@ -73,19 +73,23 @@ VALUES
 
 --Update value of notification and avatar into Users table
 UPDATE
-    users
-  SET
-    avatar='younggirl', notification=true
-  WHERE
-    users.id=${id}
-     RETURNING id,avatar,notification
-    `;`;
+  users
+SET
+  avatar='younggirl', notification=true
+WHERE
+  users.id=${id}
+RETURNING
+  id,
+  avatar,
+  notification
+    `;
+    `;
 
 --create Transactions table
 CREATE TABLE transactions(
   id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  user_id integer  NOT NULL,
-  type_id integer NOT NULL,
+  user_id integer REFERENCES users(id) ,
+  type_id integer REFERENCES transaction_types(id) ,
   date date NOT NULL,
   amount NUMERIC(10,2) NOT NULL,
   description varchar(110),

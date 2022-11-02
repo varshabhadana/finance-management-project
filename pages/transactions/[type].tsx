@@ -176,7 +176,10 @@ export default function Income(props: Props) {
     <div css={mainContainer}>
       <Head>
         <title>{props.pageType}</title>
-        <meta name="description" content="Set your income of the day" />
+        <meta
+          name="description"
+          content={`Set your ${props.pageType} of the day`}
+        />
       </Head>
 
       <h1 css={headingStyles}>{props.pageType}</h1>
@@ -259,13 +262,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!user) {
     return {
       redirect: {
-        destination: '/register?retunTo=/profile-setup',
+        destination: '/register?retunTo=/login',
         permanent: true,
       },
     };
   }
+  // To get transaction type from url
   const pageType = context.query.type;
-  console.log('page', pageType);
 
   return {
     props: {

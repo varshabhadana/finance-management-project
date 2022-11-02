@@ -1,6 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createTransaction } from '../../database/transactions';
+import {
+  createTransaction,
+  getTransactionByUserId,
+} from '../../database/transactions';
 
 export type TransactionResponse =
   | {
@@ -15,7 +18,7 @@ export type TransactionResponse =
 
 export default async function handler(
   request: NextApiRequest,
-  response: NextApiResponse<TransactionResponse>,
+  response: NextApiResponse<any>,
 ) {
   const { amount, date, description, category_id, user_id, type_id } =
     request.body;
@@ -28,7 +31,6 @@ export default async function handler(
       typeof request.body.description !== 'string' ||
       typeof request.body.category_id !== 'number' ||
       typeof request.body.user_id !== 'number' ||
-      /* typeof request.body.type_id !== 'number' || */
       !request.body.category_id ||
       !request.body.amount ||
       !request.body.date
@@ -58,6 +60,21 @@ export default async function handler(
         user_id,
         type_id,
       });
+    }
+  }
+  if (request.method === 'GET') {
+    if (typeof request.query.user_id !== 'string' || !request.query.user_id) {
+      return response.status(400).json({
+        errors: [{ message: 'User id not provided' }],
+      });
+    }
+    // get Transaction by by user Id
+    const allTransactions = await getTransactionByUserId(
+      Number(request.query.user_id),
+    );
+    console.log('aLL', request.query);
+    if (allTransactions) {
+      response.status(200).json(allTransactions);
     }
   }
 }

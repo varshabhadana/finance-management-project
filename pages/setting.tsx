@@ -1,5 +1,7 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import { getUserBySessionToken } from '../database/users';
 
 const formStyle = css`
   display: flex;
@@ -29,4 +31,25 @@ export default function Settings() {
       </div>
     </>
   );
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // When there is no token or not valid token redirect to login page
+  const token = context.req.cookies.sessionToken;
+
+  const user = token && (await getUserBySessionToken(token));
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: '/register?retunTo=/profile-setup',
+        permanent: true,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...user,
+    },
+  };
 }

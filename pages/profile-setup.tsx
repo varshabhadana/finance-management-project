@@ -63,7 +63,7 @@ const errorsStyles = css`
   font-size: 18px;
 `;
 
-export default function Profile(props: Props) {
+export default function ProfileSetup(props: Props) {
   const avatars: Avatar = ['youngboy', 'younggirl'];
   const firstNameUpperCase =
     props.firstName.charAt(0).toUpperCase() + props.firstName.slice(1);

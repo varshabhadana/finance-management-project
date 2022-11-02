@@ -113,7 +113,10 @@ export async function updateUser(
     avatar=${avatar}, notification=${notification}
   WHERE
     users.id=${id}
-    RETURNING id,avatar,notification
+    RETURNING
+     id,
+     avatar,
+     notification
     `;
   return user;
 }
