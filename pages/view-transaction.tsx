@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Transaction, TransactionData } from '../database/transactions';
+import { TransactionData } from '../database/transactions';
 import { getUserBySessionToken } from '../database/users';
 
 type Props = {
@@ -25,10 +25,11 @@ const transactionStyles = css`
   margin-top: 50px;
 `;
 export default function transaction(props: Props) {
-  const [income, setIncome] = useState([223]);
-  const [expense, setExpense] = useState([33]);
-  const [saving, setSaving] = useState([33]);
+  const [totalIncome, setTotalIncome] = useState();
+  const [totalExpense, setTotalExpense] = useState();
+  const [saving, setSaving] = useState();
   const [transactions, setTransactions] = useState<TransactionData[]>();
+
   // to fetch transactions from database
   useEffect(() => {
     const getTransaction = async () => {
@@ -45,11 +46,31 @@ export default function transaction(props: Props) {
         },
       );
       const data = await response.json();
-      console.log('transaction data', data);
+
       setTransactions(data);
     };
     getTransaction();
   }, []);
+  // to delete transaction by id and return the remaining transactions
+  async function transactionDeleteHandler(id: Number) {
+    const response = await fetch(
+      '/api/transaction?' +
+        new URLSearchParams({
+          transaction_id: String(id),
+        }),
+      {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+        },
+      },
+    );
+    const deletedTransaction = await response.json();
+    const filteredTransaction = transactions?.filter((el) => {
+      return el.id !== deletedTransaction.id;
+    });
+    setTransactions(filteredTransaction);
+  }
 
   return (
     <>
@@ -63,12 +84,12 @@ export default function transaction(props: Props) {
       <div css={totalStyles}>
         <div>
           <h3>INCOME</h3>
-          <div> {income} </div>
+          <div> {totalIncome} </div>
         </div>
 
         <div>
           <h3>EXPENSE</h3>
-          <div> {expense} </div>
+          <div> {totalExpense} </div>
         </div>
         <div>
           <h3>SAVING</h3>
@@ -87,6 +108,9 @@ export default function transaction(props: Props) {
               />
               <div>{el.categoryName}</div>
               <div>{el.amount}</div>
+              <button onClick={() => transactionDeleteHandler(el.id)}>
+                DELETE
+              </button>
             </div>
           );
         })}

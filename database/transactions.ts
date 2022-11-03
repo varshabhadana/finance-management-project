@@ -76,3 +76,18 @@ WHERE
   `;
   return transaction;
 }
+
+// Delete transaction by user id
+export async function deleteTransactionByTransactionsId(id: number) {
+  const [transaction] = await sql<Transaction[]>`
+DELETE
+FROM
+  transactions
+WHERE
+  transactions.id =${id}
+RETURNING
+*
+
+  `;
+  return transaction;
+}

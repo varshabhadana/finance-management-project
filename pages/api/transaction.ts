@@ -2,18 +2,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   createTransaction,
+  deleteTransactionByTransactionsId,
   getTransactionByUserId,
+  TransactionData,
 } from '../../database/transactions';
 
 export type TransactionResponse =
-  | {
+  | ({
       amount: number;
       date: Date;
       description: string;
       category_id: number;
       user_id: number;
       type_id: number;
-    }
+    } & TransactionData)
   | { errors: { message: string }[] };
 
 export default async function handler(
@@ -69,12 +71,35 @@ export default async function handler(
       });
     }
     // get Transaction by by user Id
-    const allTransactions = await getTransactionByUserId(
+    const userIdTransaction = await getTransactionByUserId(
       Number(request.query.user_id),
     );
-    console.log('aLL', request.query);
-    if (allTransactions) {
-      response.status(200).json(allTransactions);
+    console.log('userIdTransaction', request.query);
+
+    // check if user Id exist on database
+    if (!userIdTransaction) {
+      return response.status(400).json({
+        errors: [{ message: 'No transactions found ' }],
+      });
     }
+
+    return response.status(200).json(userIdTransaction);
   }
+  if (request.method === 'DELETE') {
+    const deleteTransaction = await deleteTransactionByTransactionsId(
+      Number(request.query.transaction_id),
+    );
+    console.log('transactionid', deleteTransaction);
+    // check if user Id exist on database
+    if (!deleteTransaction) {
+      return response.status(400).json({
+        errors: [{ message: 'Not a valid Id ' }],
+      });
+    }
+
+    return response.status(200).json(deleteTransaction);
+  }
+  return response
+    .status(405)
+    .json({ errors: [{ message: 'method not allowed' }] });
 }
