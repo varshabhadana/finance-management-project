@@ -25,10 +25,10 @@ const transactionStyles = css`
   margin-top: 50px;
 `;
 export default function transaction(props: Props) {
-  const [totalIncome, setTotalIncome] = useState();
-  const [totalExpense, setTotalExpense] = useState();
-  const [saving, setSaving] = useState();
-  const [transactions, setTransactions] = useState<TransactionData[]>();
+  const [totalIncome, setTotalIncome] = useState<number>(0);
+  const [totalExpense, setTotalExpense] = useState<number>(0);
+  const [saving, setSaving] = useState<number>(0);
+  const [transactions, setTransactions] = useState<TransactionData[]>([]);
 
   // to fetch transactions from database
   useEffect(() => {
@@ -51,6 +51,32 @@ export default function transaction(props: Props) {
     };
     getTransaction();
   }, []);
+  // to display total Income and expense
+  useEffect(() => {
+    // to get total of incomes
+    const totalIncomeValue = transactions
+      ?.filter((el) => {
+        return el.transactionTypeName === 'income';
+      })
+      .reduce((sum, el) => {
+        return sum + Number(el.amount);
+      }, 0);
+    setTotalIncome(totalIncomeValue);
+    // to get total of expenses
+    const totalExpenseValue = transactions
+      ?.filter((el) => {
+        return el.transactionTypeName === 'expense';
+      })
+      .reduce((sum, el) => {
+        return sum + Number(el.amount);
+      }, 0);
+    setTotalExpense(totalExpenseValue);
+
+    // to get total of saving
+    const totalSavingvalue = totalIncomeValue - totalExpenseValue;
+    setSaving(totalSavingvalue);
+  }, [transactions]);
+
   // to delete transaction by id and return the remaining transactions
   async function transactionDeleteHandler(id: Number) {
     const response = await fetch(
@@ -96,30 +122,36 @@ export default function transaction(props: Props) {
           <div> {saving} </div>
         </div>
       </div>
+
       <div>
-        {transactions?.map((el) => {
-          return (
-            <div css={transactionStyles} key={el.id}>
-              <Image
-                src={`/${el.categoryLogo}.png`}
-                alt={`${el.categoryLogo}`}
-                width={60}
-                height={50}
-              />
-              <div>{el.categoryName}</div>
-              <div>{el.amount}</div>
-              <button onClick={() => transactionDeleteHandler(el.id)}>
-                DELETE
-              </button>
-            </div>
-          );
-        })}
+        {transactions.length > 0 ? (
+          <div>
+            {transactions?.map((el) => {
+              return (
+                <div css={transactionStyles} key={el.id}>
+                  <Image
+                    src={`/${el.categoryLogo}.png`}
+                    alt={`${el.categoryLogo}`}
+                    width={60}
+                    height={50}
+                  />
+                  <div>{el.categoryName}</div>
+                  <div>{el.amount}</div>
+                  <button onClick={() => transactionDeleteHandler(el.id)}>
+                    DELETE
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div>No Record Found</div>
+        )}
       </div>
 
       <Link href={'/transactions/income'}>
         <button>Add Income</button>
       </Link>
-
       <Link href={'/transactions/expense'}>
         <button>Add Expense</button>
       </Link>

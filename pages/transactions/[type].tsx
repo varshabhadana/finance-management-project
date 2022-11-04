@@ -247,7 +247,7 @@ export default function Income(props: Props) {
           onChange={handleChange}
         />
         <button css={addButtonStyle} onClick={addIncomeHandler}>
-          Add
+          <a href="/view-transaction">Add</a>
         </button>
       </form>
     </div>

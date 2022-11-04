@@ -16,7 +16,7 @@ export type TransactionData = Omit<
 > & {
   categoryName: string;
   categoryLogo: string;
-  trasactionTypeName: string;
+  transactionTypeName: string;
 };
 
 // to add income transaction to transactions table
