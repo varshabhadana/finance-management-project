@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import TransactionListItem from '../components/TransactionListItem';
 import { TransactionData } from '../database/transactions';
 import { getUserBySessionToken } from '../database/users';
 
@@ -13,11 +14,41 @@ type Props = {
     firstName: string;
   };
 };
+const buttonContainerStyles = css`
+  display: flex;
+  justify-content: center;
+`;
 
+const ButtonStyle = css`
+  width: 20%;
+  font-size: 16px;
+  padding: 5px;
+  padding: 15px 32px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 60px;
+  margin-right: 20px;
+  background-color: #1366e7;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #64748b;
+  }
+`;
 const totalStyles = css`
   display: flex;
 
   justify-content: space-evenly;
+`;
+const messageStyles = css`
+  text-align: center;
+  font-size: 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-weight: bold;
 `;
 const transactionStyles = css`
   display: flex;
@@ -126,7 +157,14 @@ export default function transaction(props: Props) {
       <div>
         {transactions.length > 0 ? (
           <div>
-            {transactions?.map((el) => {
+            {transactions.map((el) => (
+              <TransactionListItem
+                key={el.id}
+                singleTransaction={el}
+                transactionDeleteHandler={transactionDeleteHandler}
+              />
+            ))}
+            {/*  {transactions?.map((el) => {
               return (
                 <div css={transactionStyles} key={el.id}>
                   <Image
@@ -142,19 +180,20 @@ export default function transaction(props: Props) {
                   </button>
                 </div>
               );
-            })}
+            })} */}
           </div>
         ) : (
-          <div>No Record Found</div>
+          <div css={messageStyles}>No Record Found</div>
         )}
       </div>
-
-      <Link href={'/transactions/income'}>
-        <button>Add Income</button>
-      </Link>
-      <Link href={'/transactions/expense'}>
-        <button>Add Expense</button>
-      </Link>
+      <div css={buttonContainerStyles}>
+        <Link href={'/transactions/income'}>
+          <button css={ButtonStyle}>Add Income</button>
+        </Link>
+        <Link href={'/transactions/expense'}>
+          <button css={ButtonStyle}>Add Expense</button>
+        </Link>
+      </div>
     </>
   );
 }

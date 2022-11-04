@@ -5,6 +5,7 @@ import {
   deleteTransactionByTransactionsId,
   getTransactionByUserId,
   TransactionData,
+  updateAmountByTransactionId,
 } from '../../database/transactions';
 
 export type TransactionResponse =
@@ -64,17 +65,17 @@ export default async function handler(
       });
     }
   }
+  // to get Transaction by by user Id
   if (request.method === 'GET') {
     if (typeof request.query.user_id !== 'string' || !request.query.user_id) {
       return response.status(400).json({
         errors: [{ message: 'User id not provided' }],
       });
     }
-    // get Transaction by by user Id
+
     const userIdTransaction = await getTransactionByUserId(
       Number(request.query.user_id),
     );
-    console.log('userIdTransaction', request.query);
 
     // check if user Id exist on database
     if (!userIdTransaction) {
@@ -85,6 +86,7 @@ export default async function handler(
 
     return response.status(200).json(userIdTransaction);
   }
+  // to delete transaction
   if (request.method === 'DELETE') {
     const deleteTransaction = await deleteTransactionByTransactionsId(
       Number(request.query.transaction_id),
@@ -98,6 +100,33 @@ export default async function handler(
     }
 
     return response.status(200).json(deleteTransaction);
+  }
+  // to update transaction amount
+  if (request.method === 'PUT') {
+    // 1. Make sure the data exist
+    if (
+      typeof request.body.id !== 'number' ||
+      typeof request.body.amount !== 'number' ||
+      !request.body.id ||
+      !request.body.amount
+    ) {
+      return response
+        .status(400)
+        .json({ errors: [{ message: 'Amount not provided as a number' }] });
+    }
+
+    const updatedAmount = await updateAmountByTransactionId(
+      request.body.id,
+      request.body.amount,
+    );
+    // 2.check if user Id exist on database
+    if (!updatedAmount) {
+      return response.status(400).json({
+        errors: [{ message: 'Not a valid Id ' }],
+      });
+    }
+
+    return response.status(200).json(updatedAmount);
   }
   return response
     .status(405)

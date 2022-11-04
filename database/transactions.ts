@@ -77,7 +77,7 @@ WHERE
   return transaction;
 }
 
-// Delete transaction by user id
+// Delete transaction by transaction id
 export async function deleteTransactionByTransactionsId(id: number) {
   const [transaction] = await sql<Transaction[]>`
 DELETE
@@ -89,5 +89,21 @@ RETURNING
 *
 
   `;
+  return transaction;
+}
+
+// Update transaction amount by transaction id
+export async function updateAmountByTransactionId(id: number, amount: number) {
+  const [transaction] = await sql<Transaction[]>`
+UPDATE
+  transactions
+SET
+  amount=${amount}
+WHERE
+  transactions.id =${id}
+RETURNING
+  *
+    `;
+
   return transaction;
 }
