@@ -67,14 +67,23 @@ export default async function handler(
   }
   // to get Transaction by by user Id
   if (request.method === 'GET') {
-    if (typeof request.query.user_id !== 'string' || !request.query.user_id) {
+    if (
+      typeof request.query.user_id !== 'string' ||
+      typeof request.query.startDate !== 'string' ||
+      typeof request.query.endDate !== 'string' ||
+      !request.query.user_id ||
+      !request.query.startDate ||
+      !request.query.endDate
+    ) {
       return response.status(400).json({
-        errors: [{ message: 'User id not provided' }],
+        errors: [{ message: 'User id , start date or end date not provided' }],
       });
     }
 
     const userIdTransaction = await getTransactionByUserId(
       Number(request.query.user_id),
+      request.query.startDate,
+      request.query.endDate,
     );
 
     // check if user Id exist on database

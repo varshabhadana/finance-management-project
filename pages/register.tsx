@@ -19,7 +19,7 @@ const containerStyles = css`
   justify-content: center;
   margin-top: 70px;
   border-radius: 5px;
-  background-color: #f2f2f2;
+
   padding: 32px;
   padding-left: 40px;
   padding-right: 40px;
@@ -126,79 +126,81 @@ export default function Register(props: Props) {
   }
 
   return (
-    <div css={mainContainer}>
-      <Head>
-        <title>Create Account</title>
-        <meta name="description" content="Create a new account " />
-      </Head>
+    <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100 ">
+      <div className="overflow-hidden bg-white shadow sm:rounded-lg space-y-8">
+        <Head>
+          <title>Create Account</title>
+          <meta name="description" content="Create a new account " />
+        </Head>
 
-      {errors.map((el) => {
-        return (
-          <p css={errorsStyles} key={el.message}>
-            {el.message}
-          </p>
-        );
-      })}
-      <div css={containerStyles}>
-        <form
-          css={formStyle}
-          onSubmit={(event) => {
-            event.preventDefault();
-            setFormValues(initialFormValues);
-          }}
-        >
-          <h1>Create Account</h1>
-          <label htmlFor="firstName">First Name</label>
-          <input
-            css={inputStyles}
-            type="text"
-            id="firstName"
-            name="firstName"
-            placeholder="Your first name.."
-            value={form.firstName}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            css={inputStyles}
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder="Your last name.."
-            value={form.lastName}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="email">Email</label>
-          <input
-            css={inputStyles}
-            type="text"
-            id="email"
-            name="email"
-            placeholder="Your email.."
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            css={inputStyles}
-            type="text"
-            id="password"
-            name="password"
-            placeholder="Your password.."
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-          <button css={ButtonStyle} type="submit" onClick={registerHandler}>
-            Register
-          </button>
-          <h3>
-            Already have an account ? <Link href={'/login'}>Login</Link>{' '}
-          </h3>
-        </form>
+        {errors.map((el) => {
+          return (
+            <p css={errorsStyles} key={el.message}>
+              {el.message}
+            </p>
+          );
+        })}
+        <div css={containerStyles}>
+          <form
+            css={formStyle}
+            onSubmit={(event) => {
+              event.preventDefault();
+              setFormValues(initialFormValues);
+            }}
+          >
+            <h1>Create Account</h1>
+            <label htmlFor="firstName">First Name</label>
+            <input
+              css={inputStyles}
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="Your first name.."
+              value={form.firstName}
+              onChange={handleChange}
+              required
+            />
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              css={inputStyles}
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Your last name.."
+              value={form.lastName}
+              onChange={handleChange}
+              required
+            />
+            <label htmlFor="email">Email</label>
+            <input
+              css={inputStyles}
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Your email.."
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+            <label htmlFor="password">Password</label>
+            <input
+              css={inputStyles}
+              type="text"
+              id="password"
+              name="password"
+              placeholder="Your password.."
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+            <button css={ButtonStyle} type="submit" onClick={registerHandler}>
+              Register
+            </button>
+            <h3>
+              Already have an account ? <Link href={'/login'}>Login</Link>{' '}
+            </h3>
+          </form>
+        </div>
       </div>
     </div>
   );

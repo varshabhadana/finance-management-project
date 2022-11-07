@@ -1,7 +1,12 @@
+import {
+  Calendar,
+  DayRange,
+  utils,
+} from '@amir04lm26/react-modern-calendar-date-picker';
 import { css } from '@emotion/react';
+import { CalendarIcon } from '@heroicons/react/20/solid';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TransactionListItem from '../components/TransactionListItem';
@@ -60,28 +65,59 @@ export default function transaction(props: Props) {
   const [totalExpense, setTotalExpense] = useState<number>(0);
   const [saving, setSaving] = useState<number>(0);
   const [transactions, setTransactions] = useState<TransactionData[]>([]);
+  const [isCalenderOpen, setIsCalenderOpen] = useState<Boolean>(false);
+
+  // filter transaction by date range
+  const formatDate = (date: Date) => {
+    return {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+    };
+  };
+
+  const defaultFrom = {
+    year: 2022,
+    month: 11,
+    day: 1,
+  };
+
+  const defaultTo = formatDate(new Date());
+
+  const defaultRange = {
+    from: defaultFrom,
+    to: utils('en').getToday(),
+  };
+
+  const [selectedDayRange, setSelectedDayRange] =
+    useState<DayRange>(defaultRange);
 
   // to fetch transactions from database
   useEffect(() => {
-    const getTransaction = async () => {
-      const response = await fetch(
-        '/api/transaction?' +
-          new URLSearchParams({
-            user_id: String(props.user.id),
-          }),
-        {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json',
-          },
-        },
-      );
-      const data = await response.json();
+    if (selectedDayRange.from && selectedDayRange.to) {
+      const getTransaction = async () => {
+        const response = await fetch(
+          '/api/transaction?' +
+            new URLSearchParams({
+              user_id: String(props.user.id),
+              startDate: `${selectedDayRange.from?.year}-${selectedDayRange.from?.month}-${selectedDayRange.from?.day}`,
 
-      setTransactions(data);
-    };
-    getTransaction();
-  }, []);
+              endDate: `${selectedDayRange.to?.year}-${selectedDayRange.to?.month}-${selectedDayRange.to?.day}`,
+            }),
+          {
+            method: 'GET',
+            headers: {
+              'content-type': 'application/json',
+            },
+          },
+        );
+        const data = await response.json();
+
+        setTransactions(data);
+      };
+      getTransaction();
+    }
+  }, [selectedDayRange]);
   // to display total Income and expense
   useEffect(() => {
     // to get total of incomes
@@ -154,6 +190,33 @@ export default function transaction(props: Props) {
         </div>
       </div>
 
+      <div className="flex items-center justify-center relative">
+        {/*  // toggle calender visibility */}
+        <button
+          onClick={() => {
+            setIsCalenderOpen(!isCalenderOpen);
+          }}
+        >
+          {' '}
+          <CalendarIcon
+            className="-ml-1 mr-2 h-5 w-5 text-gray-500"
+            aria-hidden="true"
+          />
+        </button>
+
+        <div style={{ position: 'absolute', top: '20px' }}>
+          {isCalenderOpen && (
+            <Calendar
+              /* calendarClassName="absolute" */
+              value={selectedDayRange}
+              onChange={setSelectedDayRange}
+              shouldHighlightWeekends
+              renderFooter={() => <p>hello</p>}
+            />
+          )}
+        </div>
+      </div>
+
       <div>
         {transactions.length > 0 ? (
           <div>
@@ -176,7 +239,7 @@ export default function transaction(props: Props) {
                   <div>{el.categoryName}</div>
                   <div>{el.amount}</div>
                   <button onClick={() => transactionDeleteHandler(el.id)}>
-                    DELETE
+                    DELETEs
                   </button>
                 </div>
               );

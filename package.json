@@ -9,16 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amir04lm26/react-modern-calendar-date-picker": "^1.0.1",
     "@emotion/react": "^11.10.4",
+    "@headlessui/react": "^1.7.4",
+    "@heroicons/react": "^2.0.13",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie": "^0.5.1",
     "bcrypt": "^5.1.0",
     "cookie": "^0.5.0",
     "dotenv-safe": "^8.2.0",
+    "init": "^0.1.2",
     "next": "12.3.1",
     "postgres": "https://github.com/porsager/postgres",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-modern-calendar-datepicker": "^3.1.6"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.19.1",
@@ -32,6 +37,7 @@
     "@typescript-eslint/parser": "5.40.1",
     "@upleveled/eslint-config-upleveled": "^3.1.0",
     "@upleveled/eslint-plugin-upleveled": "2.1.6",
+    "autoprefixer": "^10.4.13",
     "eslint": "8.25.0",
     "eslint-config-next": "12.3.1",
     "eslint-config-react-app": "7.0.1",
@@ -47,6 +53,8 @@
     "eslint-plugin-sonarjs": "0.16.0",
     "eslint-plugin-testing-library": "5.9.0",
     "eslint-plugin-unicorn": "44.0.2",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.2",
     "typescript": "4.8.4"
   },
   "resolutions": {

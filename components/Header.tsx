@@ -18,6 +18,7 @@ const navLeftStyles = css`
 type Props = {
   user: User;
 };
+
 export default function Header(props: Props) {
   const firstNameUpperCase = props.user?.firstName.charAt(0).toUpperCase();
 

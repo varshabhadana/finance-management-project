@@ -53,7 +53,11 @@ VALUES
 } */
 
 // join query to get categories and transaction types data from transaction table
-export async function getTransactionByUserId(id: number) {
+export async function getTransactionByUserId(
+  id: number,
+  startDate: string,
+  endDate: string,
+) {
   const transaction = await sql<Transaction[]>`
 SELECT
 transactions.id ,
@@ -72,6 +76,8 @@ INNER JOIN
   transaction_types ON transactions.type_id = transaction_types.id
 WHERE
   user_id =${id}
+AND
+  date BETWEEN ${startDate} AND ${endDate}
 
   `;
   return transaction;

@@ -1,3 +1,5 @@
+import '../styles/globals.css';
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import { css, Global } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { useCallback, useEffect, useState } from 'react';
