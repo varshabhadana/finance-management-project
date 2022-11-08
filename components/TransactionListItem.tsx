@@ -38,12 +38,6 @@ export default function TransactionListItem({
       setEditMode(false);
     });
     const data = await response.json();
-    console.log(data);
-
-    /* if ('errors' in userResponseBody) {
-      setErrors(userResponseBody.errors);
-      return console.log(userResponseBody.errors);
-    } */
   }
   return (
     <div css={transactionStyles}>

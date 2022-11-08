@@ -5,6 +5,7 @@ import {
 } from '@amir04lm26/react-modern-calendar-date-picker';
 import { css } from '@emotion/react';
 import { CalendarIcon } from '@heroicons/react/20/solid';
+import { DateTime } from 'luxon';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -68,29 +69,40 @@ export default function transaction(props: Props) {
   const [isCalenderOpen, setIsCalenderOpen] = useState<Boolean>(false);
 
   // filter transaction by date range
-  const formatDate = (date: Date) => {
+  /* const formatDate = (date: Date) => {
     return {
       year: date.getFullYear(),
       month: date.getMonth() + 1,
       day: date.getDate(),
     };
-  };
-
-  const defaultFrom = {
-    year: 2022,
-    month: 11,
-    day: 1,
-  };
-
-  const defaultTo = formatDate(new Date());
+  }; */
+  function getDateRange(days: number) {
+    const dateStartFrom = DateTime.now().minus({ days });
+    const dateRange = {
+      from: {
+        year: dateStartFrom.year,
+        month: dateStartFrom.month,
+        day: dateStartFrom.day,
+      },
+      to: utils('en').getToday(),
+    };
+    return dateRange;
+  }
+  // default transaction filter by today
+  const defaultFrom = DateTime.now();
 
   const defaultRange = {
-    from: defaultFrom,
+    from: {
+      year: defaultFrom.year,
+      month: defaultFrom.month,
+      day: defaultFrom.day,
+    },
     to: utils('en').getToday(),
   };
 
   const [selectedDayRange, setSelectedDayRange] =
     useState<DayRange>(defaultRange);
+  console.log(selectedDayRange);
 
   // to fetch transactions from database
   useEffect(() => {
@@ -204,6 +216,8 @@ export default function transaction(props: Props) {
           />
         </button>
 
+        {/* // calender to filter transaction by date */}
+
         <div style={{ position: 'absolute', top: '20px' }}>
           {isCalenderOpen && (
             <Calendar
@@ -211,7 +225,31 @@ export default function transaction(props: Props) {
               value={selectedDayRange}
               onChange={setSelectedDayRange}
               shouldHighlightWeekends
-              renderFooter={() => <p>hello</p>}
+              renderFooter={() => (
+                <div className="flex items-center justify-center">
+                  <button
+                    onClick={() => {
+                      setSelectedDayRange(getDateRange(7));
+                    }}
+                  >
+                    Last Week
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedDayRange(getDateRange(30));
+                    }}
+                  >
+                    Last Month
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedDayRange(defaultRange);
+                    }}
+                  >
+                    Reset
+                  </button>
+                </div>
+              )}
             />
           )}
         </div>
