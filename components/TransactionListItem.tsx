@@ -40,7 +40,7 @@ export default function TransactionListItem({
     const data = await response.json();
   }
   return (
-    <div css={transactionStyles}>
+    <div className="flex justify-evenly mx-4 my-2  bg-slate-50 py-4 items-center">
       <Image
         src={`/${categoryLogo}.png`}
         alt={`${categoryLogo}`}
@@ -51,7 +51,7 @@ export default function TransactionListItem({
       {editMode ? (
         <div>
           <input
-            className="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm "
             value={amountOnEditInput}
             onChange={(event) => {
               const result = event.currentTarget.value.replace(/\D/g, '');

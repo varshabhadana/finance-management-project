@@ -140,7 +140,7 @@ export default function Register(props: Props) {
             </p>
           );
         })}
-        <div css={containerStyles}>
+        <div className="">
           <form
             css={formStyle}
             onSubmit={(event) => {
@@ -197,7 +197,12 @@ export default function Register(props: Props) {
               Register
             </button>
             <h3>
-              Already have an account ? <Link href={'/login'}>Login</Link>{' '}
+              Already have an account ?{' '}
+              <Link href={'/login'}>
+                <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Login
+                </a>
+              </Link>{' '}
             </h3>
           </form>
         </div>

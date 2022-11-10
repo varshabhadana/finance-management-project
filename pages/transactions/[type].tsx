@@ -173,7 +173,7 @@ export default function Income(props: Props) {
     }
   }
   return (
-    <div css={mainContainer}>
+    <div className="m-5 p-5">
       <Head>
         <title>{props.pageType}</title>
         <meta
@@ -182,10 +182,12 @@ export default function Income(props: Props) {
         />
       </Head>
 
-      <h1 css={headingStyles}>{props.pageType}</h1>
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900 flex justify-center mt-2 ">
+        {props.pageType.toUpperCase()}
+      </h1>
 
       <form
-        css={formStyle}
+        className="flex justify-center flex-col w-full h-screen gap-300 p-8 gap-6 bg-gray-100 sm:rounded-lg mt-2  "
         onSubmit={(event) => {
           event.preventDefault();
           setIncomeValues(initialValue);
@@ -198,9 +200,11 @@ export default function Income(props: Props) {
             </p>
           );
         })}
-        <label>1. Select a Category</label>
+        <label className="text-xl font-bold tracking-tight text-gray-900">
+          1. Select a Category
+        </label>
         {/*  // aplying map to display categories */}
-        <div css={categoryContainer}>
+        <div className="flex ">
           {categories?.map((el) => {
             return (
               <button
@@ -219,28 +223,42 @@ export default function Income(props: Props) {
                   width={60}
                   height={50}
                 />
-                <span css={categoryHeadingStyles}>{el.name}</span>
+                <span className="text-md tracking-tight text-gray-900 flex justify-center font-medium">
+                  {el.name}
+                </span>
               </button>
             );
           })}
         </div>
-        <label>2. Enter Amount</label>
+        <label className="text-xl font-bold tracking-tight text-gray-900 tracking-wide">
+          2. Enter Amount
+        </label>
         <input
+          className=" block w-30 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg-sm mt-1.5"
           id="amount"
           type="number"
           step="0.01"
           value={incomeValues.amount}
           onChange={handleChange}
         />
-        <label>3. Choose Date</label>
+        <label className="text-xl font-bold tracking-tight text-gray-900 tracking-normal">
+          3. Choose Date
+        </label>
         <input
+          className=" block w-30 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg mt-1.5"
           id="date"
           type="date"
           value={incomeValues.date}
           onChange={handleChange}
         />
-        <label>4. Description </label> <span>(Optional)</span>
+        <label className="text-xl font-bold tracking-tight text-gray-900 tracking-normal">
+          4. Description
+          <span className="text-sm ml-2 font-light tracking-wide text-gray-900">
+            (Optional)
+          </span>
+        </label>
         <input
+          className=" block w-30 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg mt-1.5 tracking-wide "
           id="description"
           type="text"
           value={incomeValues.description}

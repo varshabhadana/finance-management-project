@@ -80,6 +80,7 @@ AND
   date BETWEEN ${startDate} AND ${endDate}
 
   `;
+  console.log(transaction);
   return transaction;
 }
 

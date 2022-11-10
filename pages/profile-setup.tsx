@@ -87,13 +87,17 @@ export default function ProfileSetup(props: Props) {
   }
 
   return (
-    <div css={mainContainerStyles}>
+    <div className="m-5 p-5  w-full h-screen gap-300 p-8 gap-6 bg-gray-100 sm:rounded-lg mt-2 ">
       <Head>
         <title>Profile</title>
         <meta name="description" content="Setup your profile" />
       </Head>
-      <h1>Welcome {firstNameUpperCase} ! </h1>
-      <div css={headingStyles}>1. Choose your avatar</div>
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900 text-left mt-2 ">
+        Welcome {firstNameUpperCase} !{' '}
+      </h1>
+      <div className="text-xl tracking-tight text-gray-900 mt-5 ">
+        1. Choose your avatar
+      </div>
       <div css={imageStyles}>
         {avatars.map((el) => {
           return (
@@ -116,12 +120,13 @@ export default function ProfileSetup(props: Props) {
         })}
       </div>
 
-      <div>
-        <label css={headingStyles}>
+      <div className="flex m-2 flex-row gap-8">
+        <label className="text-xl tracking-tight text-gray-900  ">
           2. Do you want a daily reminder to add your expenses?
         </label>
 
         <input
+          className="h-6 w-6 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 "
           type="checkbox"
           onClick={(event) => {
             setNotification(event.currentTarget.checked);

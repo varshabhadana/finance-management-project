@@ -10,6 +10,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import AmountLabel from '../components/AmountLabel';
 import TransactionListItem from '../components/TransactionListItem';
 import { TransactionData } from '../database/transactions';
 import { getUserBySessionToken } from '../database/users';
@@ -61,7 +62,7 @@ const transactionStyles = css`
   justify-content: space-evenly;
   margin-top: 50px;
 `;
-export default function transaction(props: Props) {
+export default function Transaction(props: Props) {
   const [totalIncome, setTotalIncome] = useState<number>(0);
   const [totalExpense, setTotalExpense] = useState<number>(0);
   const [saving, setSaving] = useState<number>(0);
@@ -76,6 +77,8 @@ export default function transaction(props: Props) {
       day: date.getDate(),
     };
   }; */
+
+  // function to get date range
   function getDateRange(days: number) {
     const dateStartFrom = DateTime.now().minus({ days });
     const dateRange = {
@@ -124,13 +127,14 @@ export default function transaction(props: Props) {
           },
         );
         const data = await response.json();
-
         setTransactions(data);
       };
       getTransaction();
     }
   }, [selectedDayRange]);
+
   // to display total Income and expense
+
   useEffect(() => {
     // to get total of incomes
     const totalIncomeValue = transactions
@@ -186,24 +190,15 @@ export default function transaction(props: Props) {
           content="Overview of your income and expense transaction"
         />
       </Head>
-      <div css={totalStyles}>
-        <div>
-          <h3>INCOME</h3>
-          <div> {totalIncome} </div>
-        </div>
-
-        <div>
-          <h3>EXPENSE</h3>
-          <div> {totalExpense} </div>
-        </div>
-        <div>
-          <h3>SAVING</h3>
-          <div> {saving} </div>
-        </div>
+      {/* // component to display the totals */}
+      <div className="flex ">
+        <AmountLabel label="INCOME" value={totalIncome} />
+        <AmountLabel label="EXPENSE" value={totalExpense} />
+        <AmountLabel label="SAVING" value={saving} />
       </div>
 
+      {/*  // toggle calender visibility */}
       <div className="flex items-center justify-center relative">
-        {/*  // toggle calender visibility */}
         <button
           onClick={() => {
             setIsCalenderOpen(!isCalenderOpen);
@@ -211,7 +206,7 @@ export default function transaction(props: Props) {
         >
           {' '}
           <CalendarIcon
-            className="-ml-1 mr-2 h-5 w-5 text-gray-500"
+            className="-ml-1 mr-2 h-5 w-5 text-blue-500  "
             aria-hidden="true"
           />
         </button>
@@ -226,7 +221,7 @@ export default function transaction(props: Props) {
               onChange={setSelectedDayRange}
               shouldHighlightWeekends
               renderFooter={() => (
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-evenly text-lg py-4 ">
                   <button
                     onClick={() => {
                       setSelectedDayRange(getDateRange(7));
@@ -265,23 +260,6 @@ export default function transaction(props: Props) {
                 transactionDeleteHandler={transactionDeleteHandler}
               />
             ))}
-            {/*  {transactions?.map((el) => {
-              return (
-                <div css={transactionStyles} key={el.id}>
-                  <Image
-                    src={`/${el.categoryLogo}.png`}
-                    alt={`${el.categoryLogo}`}
-                    width={60}
-                    height={50}
-                  />
-                  <div>{el.categoryName}</div>
-                  <div>{el.amount}</div>
-                  <button onClick={() => transactionDeleteHandler(el.id)}>
-                    DELETEs
-                  </button>
-                </div>
-              );
-            })} */}
           </div>
         ) : (
           <div css={messageStyles}>No Record Found</div>
