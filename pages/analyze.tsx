@@ -13,6 +13,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import LineChartPanel from '../components/LineChartPanel';
 import PieChartPanel from '../components/PieChartPanel';
 import { periodWeekly, periodYearly } from '../consts';
 import { TransactionData } from '../database/transactions';
@@ -153,15 +154,16 @@ export default function Analyze(props: Props) {
         ) || 0,
     };
   }
-
+  console.log('chartData', chartData);
   return (
-    <div className="bg-gray-100 ">
+    <div className="">
       {chartData.length > 0 && (
-        <div className="flex flex-col p-10">
+        <div className="flex flex-row gap-4 p-10">
           <div
-            style={{ height: '600px' }}
-            className="flex items-center justify-center flex-col bg-white sm:rounded-lg  "
+            style={{ height: '500px' }}
+            className="flex items-center justify-center flex-col bg-white sm:rounded-lg shadow-xl w-7/12  "
           >
+            <h1 className="text-lg text-left">Overview</h1>
             <ResponsiveContainer width="90%" height="90%">
               <BarChart
                 className=" justify-center items-center  "
@@ -186,22 +188,14 @@ export default function Analyze(props: Props) {
             </ResponsiveContainer>
           </div>
 
-          <div className="flex bg-white mt-2 justify-evenly w-full sm:rounded-lg">
-            <PieChartPanel
-              transactions={transactions.filter(
-                (el) => el.transactionTypeName === 'income',
-              )}
-            />
-
-            <PieChartPanel
-              transactions={transactions.filter(
-                (el) => el.transactionTypeName === 'expense',
-              )}
-            />
+          <div className="flex w-3/12">
+            <PieChartPanel transactions={transactions} />
           </div>
         </div>
       )}
-
+      {/*  <div>
+        <LineChartPanel chartData={chartData} />
+      </div> */}
       <div className="flex items-center justify-evenly text-lg py-4 ">
         <button
           onClick={() => {

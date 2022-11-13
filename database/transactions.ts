@@ -10,10 +10,7 @@ export type Transaction = {
   type_id: number;
 };
 
-export type TransactionData = Omit<
-  Transaction,
-  'user_id' | 'category_id' | 'type_id'
-> & {
+export type TransactionData = Omit<Transaction, 'user_id' | 'category_id'> & {
   categoryName: string;
   categoryLogo: string;
   transactionTypeName: string;

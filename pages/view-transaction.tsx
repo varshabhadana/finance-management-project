@@ -128,6 +128,7 @@ export default function Transaction(props: Props) {
         );
         const data = await response.json();
         setTransactions(data);
+        console.log('data', data);
       };
       getTransaction();
     }
@@ -180,7 +181,7 @@ export default function Transaction(props: Props) {
     });
     setTransactions(filteredTransaction);
   }
-
+  console.log('transactions', transactions);
   return (
     <>
       <Head>
@@ -258,6 +259,8 @@ export default function Transaction(props: Props) {
                 key={el.id}
                 singleTransaction={el}
                 transactionDeleteHandler={transactionDeleteHandler}
+                setTransactions={setTransactions}
+                transactions={transactions}
               />
             ))}
           </div>

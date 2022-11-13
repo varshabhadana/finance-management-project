@@ -48,11 +48,18 @@ const renderCustomizedLabel = ({
 };
 
 export default function PieChartPanel(props: Props) {
-  console.log(props.transactions);
   const [chartData, setChartData] = useState<ChartData[]>([]);
+  const [pieChartView, setPieChartView] = useState<string>('income');
 
   useEffect(() => {
-    const groupedByCategoryName = _.groupBy(props.transactions, 'categoryName');
+    const filteredTransactions = props.transactions.filter(
+      (el) => el.transactionTypeName === pieChartView,
+    );
+
+    const groupedByCategoryName = _.groupBy(
+      filteredTransactions,
+      'categoryName',
+    );
 
     const categoryNames = Object.keys(groupedByCategoryName);
     console.log(groupedByCategoryName);
@@ -69,10 +76,23 @@ export default function PieChartPanel(props: Props) {
     console.log('transformedData', transformedData);
 
     setChartData(transformedData);
-  }, [props.transactions]);
+  }, [props.transactions, pieChartView]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-fit h-fit gap-300 p-8 gap-6 bg-slate-50 sm:rounded-lg m-5 p-5">
+    <div className="flex flex-col justify-center items-center bg-white sm:rounded-lg shadow-xl p-5 box-content ">
+      <div className="flex justify-end w-full box-content ">
+        {' '}
+        <select
+          className="p-2 border-solid border-2 border-black-600  "
+          name="transactionTypes"
+          id="transactionTypes"
+          onChange={(event) => setPieChartView(event.currentTarget.value)}
+        >
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </div>
+
       <PieChart width={400} height={400}>
         <Pie
           data={chartData}
@@ -80,7 +100,7 @@ export default function PieChartPanel(props: Props) {
           cy={200}
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={150}
+          outerRadius={100}
           fill="#8884d8"
           dataKey="value"
         >
@@ -93,7 +113,7 @@ export default function PieChartPanel(props: Props) {
       <div className="flex flex-row">
         {COLORS.map((color, i) => {
           return (
-            <div className=" flex justify-center item-center mr-5">
+            <div key={color} className=" flex justify-center item-center mr-5">
               {chartData[i] && (
                 <div
                   className="mr-2 w-5 h-5 inline-block"

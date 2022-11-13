@@ -24,7 +24,7 @@ export default function UserProfile(props: Props) {
       </Head>
 
       {props.id ? (
-        <h1>Hello {firstNameUpperCase} ,</h1>
+        <h1 className="font-bold text-2xl">Hello {firstNameUpperCase} ,</h1>
       ) : (
         <h1>User not found,</h1>
       )}

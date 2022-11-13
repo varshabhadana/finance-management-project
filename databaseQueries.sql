@@ -41,6 +41,11 @@ VALUES
 ('Donation', '0', 'expense'),
 ('Tax', '0', 'expense');
 
+--Inset values into categories table new category by user
+INSERT INTO categories(name, created_by, type,logo)
+VALUES
+('Office' , '6', 'expense','box'),
+
 --GET all the categories
 SELECT * FROM categories;
 
