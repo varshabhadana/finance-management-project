@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
+import { Label, Modal, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import { Fragment, useState } from 'react';
 import { Categories } from '../database/categories';

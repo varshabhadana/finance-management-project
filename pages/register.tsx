@@ -126,8 +126,8 @@ export default function Register(props: Props) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100 ">
-      <div className="overflow-hidden bg-white shadow sm:rounded-lg space-y-8">
+    <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100 drop-shadow-xl  ">
+      <div className="overflow-hidden bg-white shadow sm:rounded-lg space-y-8 w-5/12 px-12 py-8 ">
         <Head>
           <title>Create Account</title>
           <meta name="description" content="Create a new account " />
@@ -140,7 +140,7 @@ export default function Register(props: Props) {
             </p>
           );
         })}
-        <div className="">
+        <div>
           <form
             css={formStyle}
             onSubmit={(event) => {
@@ -148,7 +148,9 @@ export default function Register(props: Props) {
               setFormValues(initialFormValues);
             }}
           >
-            <h1>Create Account</h1>
+            <h1 className="mt-6 mb-2 text-center text-3xl font-bold tracking-tight text-gray-900">
+              Create Account
+            </h1>
             <label htmlFor="firstName">First Name</label>
             <input
               css={inputStyles}
@@ -196,10 +198,10 @@ export default function Register(props: Props) {
             <button css={ButtonStyle} type="submit" onClick={registerHandler}>
               Register
             </button>
-            <h3>
+            <h3 className="mt-2">
               Already have an account ?{' '}
               <Link href={'/login'}>
-                <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                <a className="font-medium text-blue-600 hover:text-indigo-500">
                   Login
                 </a>
               </Link>{' '}

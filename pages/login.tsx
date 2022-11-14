@@ -94,7 +94,7 @@ export default function Login(props: Props) {
           <p>
             Doesn't have an account yet?{' '}
             <Link href={'/register'}>
-              <a className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a className="font-medium text-indigo-600 hover:text-blue-500">
                 Sign Up
               </a>
             </Link>
@@ -150,7 +150,7 @@ export default function Login(props: Props) {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-400"
                   />
                   <label
                     htmlFor="remember-me"
@@ -163,7 +163,7 @@ export default function Login(props: Props) {
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                    className="font-medium text-indigo-600 hover:text-blue-500"
                   >
                     Forgot your password?
                   </a>
@@ -172,13 +172,13 @@ export default function Login(props: Props) {
             </div>
 
             <button
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               type="submit"
               onClick={loginHandler}
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <LockClosedIcon
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                  className="h-5 w-5 text-black-500 group-hover:text-black-400"
                   aria-hidden="true"
                 />
               </span>

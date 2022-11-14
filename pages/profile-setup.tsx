@@ -87,7 +87,7 @@ export default function ProfileSetup(props: Props) {
   }
 
   return (
-    <div className="m-5 p-5  w-full h-screen gap-300 p-8 gap-6 bg-gray-100 sm:rounded-lg mt-2 ">
+    <div className=" p-5  w-full h-screen gap-300 p-8 gap-6 bg-gray-100 sm:rounded-lg  ">
       <Head>
         <title>Profile</title>
         <meta name="description" content="Setup your profile" />
@@ -126,7 +126,7 @@ export default function ProfileSetup(props: Props) {
         </label>
 
         <input
-          className="h-6 w-6 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 "
+          className="h-6 w-6 rounded border-gray-300 text-blue-600 focus:ring-blue-500 "
           type="checkbox"
           onClick={(event) => {
             setNotification(event.currentTarget.checked);

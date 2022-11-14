@@ -49,6 +49,7 @@ export default function TransactionListItem({
       setEditMode(false);
     });
     const data = await response.json();
+    // to set updated transaction amount
     const updatedTransaction = transactions.map((el) =>
       el.id !== data.id ? el : { ...el, amount: data.amount },
     );

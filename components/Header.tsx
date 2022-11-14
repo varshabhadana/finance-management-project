@@ -1,27 +1,25 @@
 import { css } from '@emotion/react';
 import Link from 'next/link';
+import DropdownPanel from './DropdownPanel';
 import { User } from './Layout';
 
-const navStyles = css`
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 12px;
-  box-shadow: 0 4px 2px -2px #ddd;
-  font-weight: bold;
-`;
-const navLeftStyles = css`
-  margin-left: 12px;
-  > a + a {
-    margin-left: 22px;
-  }
-`;
 type Props = {
   user: User;
 };
+type NavElementProps = {
+  hrefName: string;
+  label: string;
+};
+
+function NavbarElement(props: NavElementProps) {
+  return (
+    <div className="hover:bg-slate-700 text-white text-xl rounded-md px-6 py-2">
+      <Link href={`/${props.hrefName}`}>{props.label}</Link>
+    </div>
+  );
+}
 
 export default function Header(props: Props) {
-  const firstNameUpperCase = props.user?.firstName.charAt(0).toUpperCase();
-
   return (
     <header>
       <nav className="mx-auto  px-2 sm:px-6 lg:px-8 bg-gray-800 text-white ">
@@ -41,29 +39,27 @@ export default function Header(props: Props) {
             </div>
             <div>
               {props.user ? (
-                <div className="flex space-x-4 ">
-                  <div className="space-x-4">
-                    <Link href="/analyze">Analyze</Link>
-                    <Link href="/view-transaction">Transactions</Link>
+                <div className=" flex flex-row ">
+                  <div className="flex space-x-4 p-2 w-fit">
+                    <NavbarElement hrefName={'analyze'} label={'Analyze'} />
+                    <NavbarElement
+                      hrefName={'view-transaction'}
+                      label={'Transactions'}
+                    />
                   </div>
 
-                  <div className="flex space-x-4">
-                    <a className="" href="/logout">
-                      Logout
-                    </a>
-                    <Link href="/private-profile">Private-Profile</Link>
+                  <div>
+                    {' '}
+                    <DropdownPanel user={props.user} />
                   </div>
                 </div>
               ) : (
-                <div className="flex space-x-4">
-                  <Link href="/register">Register</Link>
-
-                  <Link href="/login">Login</Link>
+                <div className="flex space-x-4 p-2 w-fit ">
+                  <NavbarElement hrefName={'register'} label={'Register'} />
+                  <NavbarElement hrefName={'login'} label={'Login'} />
                 </div>
               )}
             </div>
-
-            {/*   {firstNameUpperCase} */}
           </div>
         </div>
       </nav>
