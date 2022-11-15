@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import LineChartPanel from '../components/LineChartPanel';
 import PieChartPanel from '../components/PieChartPanel';
+import RadioButtonGroup from '../components/RadioButtonGroup';
 import { periodWeekly, periodYearly } from '../consts';
 import { TransactionData } from '../database/transactions';
 import { getUserBySessionToken } from '../database/users';
@@ -33,8 +34,41 @@ export default function Analyze(props: Props) {
   const [period, setPeriod] = useState<string>('year');
   const [periodNames, setPeriodNames] = useState<string[]>(periodYearly);
 
+  // function to send state as a prop
+  function handlePeriod(period: string) {
+    setPeriod(period);
+    if (period === 'week') {
+      setSelectedDayRange(getPeriodRangeForLastWeek(7));
+      const today = new Date();
+      const weekday = today.getDay();
+      setPeriodNames(periodWeekly);
+
+      console.log(
+        periodWeekly.map(
+          (el, index) =>
+            periodWeekly[
+              Math.abs(
+                periodWeekly.length -
+                  Math.abs(periodWeekly.length - (weekday + index)),
+              )
+            ],
+        ),
+      );
+      /*    setPeriodNames(
+        periodNames.map(
+          (el, index) =>
+            periodNames[periodNames.length - Math.abs(weekday - index)],
+        ),
+      ); */
+    } else {
+      setSelectedDayRange(getPeriodRangeForlastyear(12));
+
+      setPeriodNames(periodYearly);
+    }
+  }
+
   // function to get date range by month
-  function getDateRange(months: number) {
+  function getPeriodRangeForlastyear(months: number) {
     const dateStartFrom = DateTime.now().minus({ months });
 
     const dateRange = {
@@ -48,7 +82,7 @@ export default function Analyze(props: Props) {
     };
     return dateRange;
   }
-  function getDateRangeWeek(days: number) {
+  function getPeriodRangeForLastWeek(days: number) {
     const dateStartFrom = DateTime.now().minus({ days });
 
     const dateRange = {
@@ -76,8 +110,9 @@ export default function Analyze(props: Props) {
     to: utils('en').getToday(),
   };
 
-  const [selectedDayRange, setSelectedDayRange] =
-    useState<DayRange>(defaultRange);
+  const [selectedDayRange, setSelectedDayRange] = useState<DayRange>(
+    getPeriodRangeForlastyear(365),
+  );
 
   // to fetch transactions from database
   useEffect(() => {
@@ -118,14 +153,19 @@ export default function Analyze(props: Props) {
         };
       });
 
-      const a = _.groupBy(transactionForCharts, 'date');
-      const months = Object.keys(a);
+      const transactionsGroupedByMonth = _.groupBy(
+        transactionForCharts,
+        'date',
+      );
+      const months = Object.keys(transactionsGroupedByMonth);
+      console.log('A', transactionsGroupedByMonth);
+      console.log('transactionForCharts', transactionForCharts);
 
       const transformedData = months.map((el) => {
-        const data = getTotalIncomeAndExpense(a, el);
+        const data = getTotalIncomeAndExpense(transactionsGroupedByMonth, el);
+        console.log('data', data);
         return data;
       });
-
       const allMonthData = periodNames.map((el) =>
         transformedData.some((item) => item.date === el)
           ? transformedData.find((item) => item.date === el)
@@ -138,8 +178,11 @@ export default function Analyze(props: Props) {
 
   // function to get total income, expense and month name
 
-  function getTotalIncomeAndExpense(a: any, month: string) {
-    const monthData = a[month];
+  function getTotalIncomeAndExpense(
+    transactionsGroupedByMonth: any,
+    month: string,
+  ) {
+    const monthData = transactionsGroupedByMonth[month];
     const typeMonthData = _.groupBy(monthData, 'type');
 
     return {
@@ -155,67 +198,53 @@ export default function Analyze(props: Props) {
     };
   }
   console.log('chartData', chartData);
-  return (
-    <div className="">
-      {chartData.length > 0 && (
-        <div className="flex flex-row gap-4 p-10">
-          <div
-            style={{ height: '500px' }}
-            className="flex items-center justify-center flex-col bg-white sm:rounded-lg shadow-xl w-7/12  "
-          >
-            <h1 className="text-lg text-left">Overview</h1>
-            <ResponsiveContainer width="90%" height="90%">
-              <BarChart
-                className=" justify-center items-center  "
-                /* width={1000}
-                height={500} */
-                data={chartData}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey={'date'} />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="totalIncome" fill="#8884d8" />
-                <Bar dataKey="totalExpense" fill="#82ca9d" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
 
-          <div className="flex w-3/12">
-            <PieChartPanel transactions={transactions} />
+  return (
+    <div className="w-full">
+      {/*  // Button to switch data */}
+      <RadioButtonGroup period={period} handlePeriod={handlePeriod} />
+
+      {chartData.length > 0 && (
+        <div>
+          <div className="flex gap-9 p-10 w-full ">
+            <div
+              style={{ height: '500px' }}
+              className="flex items-center justify-center flex-col bg-white sm:rounded-lg shadow-xl w-7/12  "
+            >
+              <h1 className="text-lg text-left">Overview</h1>
+              <ResponsiveContainer width="90%" height="90%">
+                <BarChart
+                  className=" justify-center items-center  "
+                  /* width={1000}
+                height={500} */
+                  data={chartData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey={'date'} />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="totalIncome" fill="#8884d8" />
+                  <Bar dataKey="totalExpense" fill="#82ca9d" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="flex w-5/12">
+              <PieChartPanel transactions={transactions} />
+            </div>
+          </div>
+          <div className="flex p-10 w-full">
+            <LineChartPanel chartData={chartData} />
           </div>
         </div>
       )}
-      {/*  <div>
-        <LineChartPanel chartData={chartData} />
-      </div> */}
-      <div className="flex items-center justify-evenly text-lg py-4 ">
-        <button
-          onClick={() => {
-            setSelectedDayRange(getDateRangeWeek(7));
-            setPeriod('week');
-            setPeriodNames(periodWeekly);
-          }}
-        >
-          Last Week
-        </button>
-        <button
-          onClick={() => {
-            setSelectedDayRange(getDateRange(12));
-            setPeriod('year');
-            setPeriodNames(periodYearly);
-          }}
-        >
-          Year
-        </button>
-      </div>
     </div>
   );
 }

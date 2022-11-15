@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -6,68 +5,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { getValidSessionByToken } from '../database/sessions';
 import { RegisterResponseBody } from './api/register';
-
-const mainContainer = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const containerStyles = css`
-  width: 1000px;
-  display: flex;
-  justify-content: center;
-  margin-top: 70px;
-  border-radius: 5px;
-
-  padding: 32px;
-  padding-left: 40px;
-  padding-right: 40px;
-  h1 {
-    text-align: center;
-  }
-  h3 {
-    text-align: center;
-  }
-`;
-const formStyle = css`
-  display: flex;
-
-  flex-direction: column;
-  width: 100%;
-`;
-const inputStyles = css`
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const ButtonStyle = css`
-  width: 100%;
-  font-size: 16px;
-  padding: 5px;
-  padding: 15px 32px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 20px;
-  background-color: #1366e7;
-  color: #fff;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #64748b;
-  }
-`;
-const errorsStyles = css`
-  color: red;
-  font-size: 18px;
-`;
 
 type Form = {
   firstName: string;
@@ -126,23 +63,21 @@ export default function Register(props: Props) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100 drop-shadow-xl  ">
-      <div className="overflow-hidden bg-white shadow sm:rounded-lg space-y-8 w-5/12 px-12 py-8 ">
+    <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white   ">
+      <div className="overflow-hidden bg-white drop-shadow-2xl sm:rounded-lg space-y-8 w-5/12 px-12 py-8  ">
         <Head>
           <title>Create Account</title>
           <meta name="description" content="Create a new account " />
         </Head>
+        <p className="text-rose-500 text-base">
+          {errors.map((el) => {
+            return <p key={el.message}>{el.message}</p>;
+          })}
+        </p>
 
-        {errors.map((el) => {
-          return (
-            <p css={errorsStyles} key={el.message}>
-              {el.message}
-            </p>
-          );
-        })}
         <div>
           <form
-            css={formStyle}
+            className="flex flex-col w-full flex space-y-3 "
             onSubmit={(event) => {
               event.preventDefault();
               setFormValues(initialFormValues);
@@ -153,7 +88,7 @@ export default function Register(props: Props) {
             </h1>
             <label htmlFor="firstName">First Name</label>
             <input
-              css={inputStyles}
+              className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5"
               type="text"
               id="firstName"
               name="firstName"
@@ -164,7 +99,7 @@ export default function Register(props: Props) {
             />
             <label htmlFor="lastName">Last Name</label>
             <input
-              css={inputStyles}
+              className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5"
               type="text"
               id="lastName"
               name="lastName"
@@ -175,7 +110,7 @@ export default function Register(props: Props) {
             />
             <label htmlFor="email">Email</label>
             <input
-              css={inputStyles}
+              className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5"
               type="text"
               id="email"
               name="email"
@@ -186,7 +121,7 @@ export default function Register(props: Props) {
             />
             <label htmlFor="password">Password</label>
             <input
-              css={inputStyles}
+              className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5"
               type="text"
               id="password"
               name="password"
@@ -195,13 +130,17 @@ export default function Register(props: Props) {
               onChange={handleChange}
               required
             />
-            <button css={ButtonStyle} type="submit" onClick={registerHandler}>
+            <button
+              className=" flex w-full justify-center rounded-md border border-transparent bg-blue-600 mt-2 py-2 px-4 text-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              type="submit"
+              onClick={registerHandler}
+            >
               Register
             </button>
             <h3 className="mt-2">
               Already have an account ?{' '}
               <Link href={'/login'}>
-                <a className="font-medium text-blue-600 hover:text-indigo-500">
+                <a className="font-medium text-blue-600 hover:text-blue-800">
                   Login
                 </a>
               </Link>{' '}

@@ -1,7 +1,6 @@
 {
   "name": "finance-management-project",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,6 +15,7 @@
     "@types/cookie": "^0.5.1",
     "@types/lodash": "^4.14.188",
     "@types/luxon": "^3.1.0",
+    "@types/nodemailer": "^6.4.6",
     "@types/recharts": "^1.8.24",
     "bcrypt": "^5.1.0",
     "cookie": "^0.5.0",
@@ -25,6 +25,7 @@
     "lodash": "^4.17.21",
     "luxon": "^3.1.0",
     "next": "12.3.1",
+    "nodemailer": "^6.8.0",
     "postgres": "https://github.com/porsager/postgres",
     "react": "18.2.0",
     "react-dom": "18.2.0",

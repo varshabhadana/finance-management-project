@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { getUserBySessionToken } from '../database/users';
 import { UserResponseBody } from './api/user-account';
@@ -12,14 +13,7 @@ type Props = {
   firstName: string;
   id: number;
 };
-const mainContainerStyles = css`
-  padding: 5px;
-  margin: 5px;
-`;
 
-const headingStyles = css`
-  font-size: 22px;
-`;
 const imageContainerStyles = css`
   border-radius: 50%;
   background-color: #dedad9;
@@ -30,6 +24,9 @@ const imageContainerStyles = css`
   padding: 30px;
   align-items: center;
   margin-right: 20px;
+  :hover {
+    background-color: #f1e8e6;
+  }
 `;
 const selectedImgStyles = css`
   border-color: #1366e7;
@@ -40,29 +37,6 @@ const imageStyles = css`
   margin: 22px 0px 20px 0px;
 `;
 
-const ButtonStyle = css`
-  width: 100px;
-  font-size: 16px;
-  padding: 5px;
-  padding: 15px 32px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 20px;
-  background-color: #1366e7;
-  color: #fff;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #64748b;
-  }
-`;
-const errorsStyles = css`
-  color: red;
-  font-size: 18px;
-`;
-
 export default function ProfileSetup(props: Props) {
   const avatars: Avatar = ['youngboy', 'younggirl'];
   const firstNameUpperCase =
@@ -70,6 +44,7 @@ export default function ProfileSetup(props: Props) {
   const [avatar, setAvatar] = useState<string>('');
   const [notification, setNotification] = useState<boolean>(false);
   const [errors, setErrors] = useState<{ message: string }[]>([]);
+  const router = useRouter();
 
   async function userAccountHandler() {
     const userResponse = await fetch('/api/user-account', {
@@ -82,12 +57,14 @@ export default function ProfileSetup(props: Props) {
     const userResponseBody = (await userResponse.json()) as UserResponseBody;
     if ('errors' in userResponseBody) {
       setErrors(userResponseBody.errors);
-      return console.log(userResponseBody.errors);
+    }
+    if (userResponse.status == 200) {
+      await router.push(`/view-transaction`);
     }
   }
 
   return (
-    <div className=" p-5  w-full h-screen gap-300 p-8 gap-6 bg-gray-100 sm:rounded-lg  ">
+    <div className=" p-5  w-full h-screen gap-300 p-8 gap-6 bg-white sm:rounded-lg  ">
       <Head>
         <title>Profile</title>
         <meta name="description" content="Setup your profile" />
@@ -134,16 +111,17 @@ export default function ProfileSetup(props: Props) {
         />
       </div>
 
-      <button onClick={userAccountHandler} css={ButtonStyle}>
+      <button
+        onClick={userAccountHandler}
+        className="flex w-1/12 justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mb-3 mt-4"
+      >
         Next
       </button>
-      {errors.map((el) => {
-        return (
-          <p css={errorsStyles} key={el.message}>
-            {el.message}
-          </p>
-        );
-      })}
+      <div className="text-rose-500 text-base space-y-2">
+        {errors.map((el) => {
+          return <p key={el.message}>{el.message}</p>;
+        })}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
@@ -8,26 +7,6 @@ import { useState } from 'react';
 import { getValidSessionByToken } from '../database/sessions';
 import { LoginResponseBody } from './api/login';
 
-const containerStyles = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const formStyle = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  width: 500px;
-  height: 400px;
-`;
-const errorsStyles = css`
-  color: red;
-  font-size: 18px;
-`;
 type loginForm = {
   email: string;
   password: string;
@@ -84,8 +63,8 @@ export default function Login(props: Props) {
     await router.push(`/private-profile`);
   }
   return (
-    <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100 ">
-      <div className="overflow-hidden bg-white shadow sm:rounded-lg w-full max-w-lg space-y-8">
+    <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white ">
+      <div className="overflow-hidden bg-white drop-shadow-2xl sm:rounded-lg w-full max-w-lg space-y-8">
         <Head>
           <title>Login</title>
           <meta name="description" content="Login To Your Account" />
@@ -94,7 +73,7 @@ export default function Login(props: Props) {
           <p>
             Doesn't have an account yet?{' '}
             <Link href={'/register'}>
-              <a className="font-medium text-indigo-600 hover:text-blue-500">
+              <a className="font-medium text-blue-600 hover:text-blue-500">
                 Sign Up
               </a>
             </Link>
@@ -111,18 +90,17 @@ export default function Login(props: Props) {
               setLoginForm(initailValues);
             }}
           >
-            {errors.map((el) => {
-              return (
-                <p css={errorsStyles} key={el.message}>
-                  {el.message}
-                </p>
-              );
-            })}
-            <div className="-space-y-px rounded-md shadow-sm">
-              <div>
+            <p className="text-rose-500 text-base">
+              {errors.map((el) => {
+                return <p key={el.message}>{el.message}</p>;
+              })}
+            </p>
+
+            <div className="-space-y-px rounded-md shadow-sm ">
+              <div className="mb-4">
                 <label htmlFor="email">Email</label>
                 <input
-                  className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm mt-1.5"
+                  className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5 "
                   type="text"
                   id="email"
                   name="email"
@@ -135,7 +113,7 @@ export default function Login(props: Props) {
               <div>
                 <label htmlFor="password">Password</label>
                 <input
-                  className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm mt-1.5"
+                  className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5"
                   type="text"
                   id="password"
                   name="password"
@@ -144,7 +122,7 @@ export default function Login(props: Props) {
                   required
                 />
               </div>
-              <div className="flex items-center justify-between  ">
+              <div className="flex items-center justify-between ">
                 <div className="flex items-center mt-1.5">
                   <input
                     id="remember-me"
@@ -163,7 +141,7 @@ export default function Login(props: Props) {
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-medium text-indigo-600 hover:text-blue-500"
+                    className="font-medium text-blue-600 hover:text-blue-500"
                   >
                     Forgot your password?
                   </a>

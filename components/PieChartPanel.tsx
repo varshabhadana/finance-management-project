@@ -80,15 +80,15 @@ export default function PieChartPanel(props: Props) {
 
   return (
     <div className="flex flex-col justify-center items-center bg-white sm:rounded-lg shadow-xl p-5 box-content ">
-      <div className="flex justify-end w-full box-content ">
-        {' '}
+      <div className="flex justify-between w-full box-content ">
+        <h1 className="text-lg text-left">Category Distribution</h1>
         <select
-          className="p-2 border-solid border-2 border-black-600  "
+          className="p-2 border-solid border-2 border-black-600 w-3/12  "
           name="transactionTypes"
           id="transactionTypes"
           onChange={(event) => setPieChartView(event.currentTarget.value)}
         >
-          <option value="income">Income</option>
+          <option value="income"> Income </option>
           <option value="expense">Expense</option>
         </select>
       </div>

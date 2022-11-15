@@ -3,7 +3,6 @@ import {
   DayRange,
   utils,
 } from '@amir04lm26/react-modern-calendar-date-picker';
-import { css } from '@emotion/react';
 import { CalendarIcon } from '@heroicons/react/20/solid';
 import { DateTime } from 'luxon';
 import { GetServerSidePropsContext } from 'next';
@@ -21,47 +20,7 @@ type Props = {
     firstName: string;
   };
 };
-const buttonContainerStyles = css`
-  display: flex;
-  justify-content: center;
-`;
 
-const ButtonStyle = css`
-  width: 20%;
-  font-size: 16px;
-  padding: 5px;
-  padding: 15px 32px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 60px;
-  margin-right: 20px;
-  background-color: #1366e7;
-  color: #fff;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #64748b;
-  }
-`;
-const totalStyles = css`
-  display: flex;
-
-  justify-content: space-evenly;
-`;
-const messageStyles = css`
-  text-align: center;
-  font-size: 20px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  font-weight: bold;
-`;
-const transactionStyles = css`
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 50px;
-`;
 export default function Transaction(props: Props) {
   const [totalIncome, setTotalIncome] = useState<number>(0);
   const [totalExpense, setTotalExpense] = useState<number>(0);
@@ -222,8 +181,9 @@ export default function Transaction(props: Props) {
               onChange={setSelectedDayRange}
               shouldHighlightWeekends
               renderFooter={() => (
-                <div className="flex items-center justify-evenly text-lg py-4 ">
+                <div className="flex items-center justify-evenly  h-9 ">
                   <button
+                    className="flex w-3/12 justify-center rounded-md border border-transparent bg-blue-600  text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-5"
                     onClick={() => {
                       setSelectedDayRange(getDateRange(7));
                     }}
@@ -231,6 +191,7 @@ export default function Transaction(props: Props) {
                     Last Week
                   </button>
                   <button
+                    className="flex w-3/12 justify-center rounded-md border border-transparent bg-blue-600  text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-5"
                     onClick={() => {
                       setSelectedDayRange(getDateRange(30));
                     }}
@@ -238,6 +199,7 @@ export default function Transaction(props: Props) {
                     Last Month
                   </button>
                   <button
+                    className="flex w-3/12 justify-center rounded-md border border-transparent bg-blue-600  text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 "
                     onClick={() => {
                       setSelectedDayRange(defaultRange);
                     }}
@@ -265,15 +227,21 @@ export default function Transaction(props: Props) {
             ))}
           </div>
         ) : (
-          <div css={messageStyles}>No Record Found</div>
+          <div className="text-2xl text-center font-bold space-x-4 space-y-4  p-8">
+            No Record Found
+          </div>
         )}
       </div>
-      <div css={buttonContainerStyles}>
+      <div className="flex justify-evenly ">
         <Link href={'/transactions/income'}>
-          <button css={ButtonStyle}>Add Income</button>
+          <button className="flex w-3/12 justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mb-3 mt-4">
+            Add Income
+          </button>
         </Link>
         <Link href={'/transactions/expense'}>
-          <button css={ButtonStyle}>Add Expense</button>
+          <button className="flex w-3/12 justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mb-3 mt-4">
+            Add Expense
+          </button>
         </Link>
       </div>
     </>

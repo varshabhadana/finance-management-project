@@ -34,27 +34,36 @@ export default function DropdownPanel(props: Props) {
         >
           <a
             href="/private-profile"
-            className="block px-4 py-2 text-md text-gray-700"
+            className="block px-4 py-2 text-md text-gray-700 hover:bg-neutral-200"
             role="menuitem"
             id="user-menu-item-0"
+            onClick={() => {
+              setIsDropDownOpen(!isDropDownOpen);
+            }}
           >
             Your Profile
           </a>
 
           <a
             href="/setting"
-            className="block px-4 py-2 text-md text-gray-700"
+            className="block px-4 py-2 text-md text-gray-700 hover:bg-neutral-200"
             role="menuitem"
             id="user-menu-item-1"
+            onClick={() => {
+              setIsDropDownOpen(!isDropDownOpen);
+            }}
           >
             Settings
           </a>
-          <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+          <hr className="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25 " />
           <a
             href="/logout"
-            className="block px-4 py-2 text-md font-bold text-red-500"
+            className="block px-4 py-2 text-md font-bold text-red-500  hover:bg-neutral-200 "
             role="menuitem"
             id="user-menu-item-2"
+            onClick={() => {
+              setIsDropDownOpen(!isDropDownOpen);
+            }}
           >
             Sign out
           </a>

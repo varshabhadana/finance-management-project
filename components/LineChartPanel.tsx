@@ -9,19 +9,10 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { TransactionData } from '../database/transactions';
 
 type Props = {
   chartData: any[];
 };
-const data = [
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
 
 const CustomizedLabel: FunctionComponent<any> = (props: any) => {
   const { x, y, stroke, value } = props;
@@ -54,28 +45,53 @@ const CustomizedAxisTick: FunctionComponent<any> = (props: any) => {
 
 export default function LineChartPanel({ chartData }: Props) {
   return (
-    <div className=" bg-white sm:rounded-lg shadow-xl p-5 w-6/12 mt-2">
-      <LineChart
-        width={500}
-        height={300}
-        data={chartData}
-        margin={{
-          top: 20,
-          right: 30,
-          left: 20,
-          bottom: 10,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" height={60} tick={<CustomizedAxisTick />} />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="Income" stroke="#8884d8">
-          <LabelList content={<CustomizedLabel />} />
-        </Line>
-        <Line type="monotone" dataKey="Expense" stroke="#82ca9d" />
-      </LineChart>
+    <div className=" w-full mt-2 mb-5 flex justify-center items-center ">
+      <div className="bg-white sm:rounded-lg shadow-xl w-6/12 p-9 mr-5">
+        <h1 className="text-lg text-left p-2">Income</h1>
+        <LineChart
+          width={500}
+          height={300}
+          data={chartData}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 10,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" height={60} tick={<CustomizedAxisTick />} />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="totalIncome" stroke="#8884d8">
+            <LabelList content={<CustomizedLabel />} />
+          </Line>
+        </LineChart>
+      </div>
+      <div className="bg-white sm:rounded-lg shadow-xl w-6/12 p-9 ml-2">
+        <h1 className="text-lg text-left p-2">Expense</h1>
+        <LineChart
+          width={500}
+          height={300}
+          data={chartData}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 10,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" height={60} tick={<CustomizedAxisTick />} />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="totalExpense" stroke="#82ca9d">
+            <LabelList content={<CustomizedLabel />} />
+          </Line>
+        </LineChart>
+      </div>
     </div>
   );
 }

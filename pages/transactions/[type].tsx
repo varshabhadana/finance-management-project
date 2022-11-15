@@ -94,6 +94,7 @@ type transactionType = {
   id: number;
   name: string;
 };
+
 export default function Income(props: Props) {
   const [formValues, setformValues] = useState<Form>(initialValue);
   const [errors, setErrors] = useState<{ message: string }[]>([]);

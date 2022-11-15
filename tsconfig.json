@@ -20,7 +20,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/InfoBoxFunctional.js"
+    "components/InfoBoxFunctional.js",
+    "mail.ts"
   ],
   "exclude": ["node_modules"]
 }
