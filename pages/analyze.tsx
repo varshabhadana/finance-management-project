@@ -2,6 +2,7 @@ import { DayRange, utils } from '@amir04lm26/react-modern-calendar-date-picker';
 import _ from 'lodash';
 import { DateTime } from 'luxon';
 import { GetServerSidePropsContext } from 'next';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import {
   Bar,
@@ -204,7 +205,7 @@ export default function Analyze(props: Props) {
       {/*  // Button to switch data */}
       <RadioButtonGroup period={period} handlePeriod={handlePeriod} />
 
-      {chartData.length > 0 && (
+      {chartData.length > 0 ? (
         <div>
           <div className="flex gap-9 p-10 w-full ">
             <div
@@ -243,6 +244,16 @@ export default function Analyze(props: Props) {
           <div className="flex p-10 w-full">
             <LineChartPanel chartData={chartData} />
           </div>
+        </div>
+      ) : (
+        <div className="flex  flex-col justify center items-center">
+          <Image
+            src={'/growth.svg'}
+            alt={'no data image'}
+            width={600}
+            height={500}
+          />
+          <h1 className="text-2xl fontbold">Oopss..! No data to show</h1>
         </div>
       )}
     </div>

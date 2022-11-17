@@ -6,35 +6,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import AddCategoryModal from '../../components/AddCategoryModal';
 import { getUserBySessionToken } from '../../database/users';
-import { CategoriesResponse } from '../api/categories';
 import { TransactionResponse } from '../api/transaction';
 
-const formStyle = css`
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-direction: column;
-  width: 800px;
-`;
-const mainContainer = css`
-  margin: 5px;
-  padding: 5px;
-`;
-const headingStyles = css`
-  text-align: center;
-`;
-const errorsStyles = css`
-  color: red;
-  font-size: 18px;
-`;
-const categoryContainer = css`
-  display: flex;
-  padding: 5px;
-`;
-const categoryHeadingStyles = css`
-  font-size: 14px;
-  padding: 5px;
-`;
 const buttonStyles = css`
   width: 100px;
   height: 100px;
@@ -46,24 +19,7 @@ const selectedCategoryStyles = css`
   border-color: #1366e7;
   border-width: 5px;
 `;
-const addButtonStyle = css`
-  width: 100%;
-  font-size: 16px;
-  padding: 5px;
-  padding: 15px 32px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 20px;
-  background-color: #1366e7;
-  color: #fff;
-  cursor: pointer;
 
-  &:hover {
-    background-color: #64748b;
-  }
-`;
 type Form = {
   amount: number;
   date: string;
@@ -202,15 +158,11 @@ export default function Income(props: Props) {
           setformValues(initialValue);
         }}
       >
-        <div className="w-fit h-1">
+        <p className="w-fit h-1 text-rose-500 text-base">
           {errors.map((el) => {
-            return (
-              <p css={errorsStyles} key={el.message}>
-                {el.message}
-              </p>
-            );
+            return <p key={el.message}>{el.message}</p>;
           })}
-        </div>
+        </p>
 
         <label className="text-xl font-bold tracking-tight text-gray-900">
           1. Select a Category
@@ -236,7 +188,7 @@ export default function Income(props: Props) {
                       width={60}
                       height={50}
                     />
-                    <span className="text-md tracking-tight text-gray-900 flex justify-center font-medium">
+                    <span className="text-sm tracking-tight text-gray-900 flex justify-center font-medium ">
                       {el.name}
                     </span>
                   </button>
@@ -296,7 +248,10 @@ export default function Income(props: Props) {
           value={formValues.description}
           onChange={handleChange}
         />
-        <button css={addButtonStyle} onClick={addTransactionHandler}>
+        <button
+          className=" flex w-full justify-center rounded-md border border-transparent bg-blue-600 mt-2 py-2 px-4 text-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          onClick={addTransactionHandler}
+        >
           Add
         </button>
       </form>

@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       setUser(profileResponseBody.user);
     }
   }, []);
-  // to display the user of first render
+  // to display the user on first render
   useEffect(() => {
     refreshUserProfile().catch(() => console.log('fetch api failed'));
   }, [refreshUserProfile]);

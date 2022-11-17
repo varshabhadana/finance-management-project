@@ -11,7 +11,7 @@ let mailOptions = {
   to: 'varshabhadana93@gmail.com',
   subject: 'Daily Remider',
   text: 'Plaintext version of the message',
-  html: '<p>HTML version of the message</p>',
+  html: '<p>This is reminder to set your daily expense and income.</p>',
 };
 
 export default function () {

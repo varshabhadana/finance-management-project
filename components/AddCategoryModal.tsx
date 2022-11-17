@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import { Label, Modal, TextInput } from 'flowbite-react';
 import Image from 'next/image';
 import { Fragment, useState } from 'react';
-import { Categories } from '../database/categories';
 import { CategoriesResponse } from '../pages/api/categories';
 import { Category } from '../pages/transactions/[type]';
 import { User } from './Layout';
@@ -82,7 +81,7 @@ export default function AddCategoryModal(props: Props) {
         >
           <Modal.Header />
           <Modal.Body>
-            <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+            <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8 ">
               {/* // to show errors */}
               {errors.map((el) => {
                 return (
@@ -91,7 +90,7 @@ export default function AddCategoryModal(props: Props) {
                   </p>
                 );
               })}
-              <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white ">
                 Create your own category
               </h3>
               <div>
@@ -130,7 +129,7 @@ export default function AddCategoryModal(props: Props) {
               </div>
 
               <button
-                className="text-lg font-medium text-gray-500 dark:text-gray-300 border-4 border-blue-500 rounded-full w-full h-22 text-blue-700 dark:text-blue-500"
+                className="text-lg font-medium text-white dark:text-gray-300 w-5/12 h-22 text-blue-700 dark:text-blue-500  rounded-md border border-transparent bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 p-1"
                 onClick={addCategoryHandler}
               >
                 Create

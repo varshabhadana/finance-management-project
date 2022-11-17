@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import Link from 'next/link';
 import DropdownPanel from './DropdownPanel';
 import { User } from './Layout';
@@ -25,18 +24,9 @@ export default function Header(props: Props) {
       <nav className="mx-auto  px-2 sm:px-6 lg:px-8 bg-gray-800 text-white ">
         <div className="relative flex h-16 items-center justify-between">
           <div className="flex justify-between w-full ">
-            <div className="flex flex-shrink-0 items-center">
-              <img
-                className="block h-8 w-auto lg:hidden"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-              />
-              <img
-                className="hidden h-8 w-auto lg:block"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-              />
-            </div>
+            <Link href={'/'} className="flex flex-shrink-0 items-center">
+              home
+            </Link>
             <div>
               {props.user ? (
                 <div className=" flex flex-row ">
