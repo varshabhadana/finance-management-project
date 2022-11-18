@@ -5,7 +5,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { createSession } from '../../database/sessions';
 import { getUserwithPasswordHashAndEmail } from '../../database/users';
 import { createSreializedRegisterSessionTokenCookie } from '../../utils/cookie';
-import mail from '../../utils/mail';
 
 export type LoginResponseBody =
   | { errors: { message: string }[] }
@@ -29,7 +28,6 @@ export default async function handler(
     }
     //2. Get the user by email
     const user = await getUserwithPasswordHashAndEmail(request.body.email);
-    mail();
 
     if (!user) {
       return response

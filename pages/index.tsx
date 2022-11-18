@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import FooterBar from '../components/FooterBar';
 
 const Home: NextPage = () => {
@@ -17,7 +18,7 @@ const Home: NextPage = () => {
           width={900}
           height={600}
         />
-        <div className="w-4/12 flex flex-col justify-center items-center">
+        <div className="w-4/12 flex flex-col justify-center items-center font-nanumMyeongjo ">
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe a
             placeat tempore natus quasi similique, vero quos corrupti asperiores
@@ -33,11 +34,13 @@ const Home: NextPage = () => {
             voluptatem provident, labore dicta debitis delectus nesciunt aut,
             error natus ea culpa quidem iste, inventore quae? Delectus nisi
           </p>
-          <div className="h-3/12 w-5/12 mt-4">
-            <button className=" flex w-full justify-center rounded-md border border-transparent bg-blue-600 mt-2 py-2 px-4 text-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              Register
-            </button>
-          </div>
+          <Link href={'/register'}>
+            <div className="h-3/12 w-5/12 mt-4">
+              <button className=" flex w-full justify-center rounded-md border border-transparent bg-blue-600 mt-2 py-2 px-4 text-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Get Started
+              </button>
+            </div>
+          </Link>
         </div>
       </div>
 

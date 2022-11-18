@@ -4,7 +4,8 @@ CREATE TABLE categories (
   id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name varchar(40) NOT NULL,
   created_by varchar (100 ) NOT NULL,
-  type varchar(40) NOT NULL
+  type varchar(40) NOT NULL,
+  logo varchar(40) NOT NULL
 );
 
 --Inset values into categories table
@@ -44,7 +45,7 @@ VALUES
 --Inset values into categories table new category by user
 INSERT INTO categories(name, created_by, type,logo)
 VALUES
-('Office' , '6', 'expense','box'),
+('Office' , '6', 'expense','box');
 
 --GET all the categories
 SELECT * FROM categories;
@@ -82,7 +83,7 @@ UPDATE
 SET
   avatar='younggirl', notification=true
 WHERE
-  users.id=${id}
+  users.id='6'
 RETURNING
   id,
   avatar,

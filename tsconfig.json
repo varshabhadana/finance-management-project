@@ -21,7 +21,8 @@
     "**/*.ts",
     "**/*.tsx",
     "components/InfoBoxFunctional.js",
-    "mail.ts"
+    "mail.js",
+    "mail.js"
   ],
   "exclude": ["node_modules"]
 }

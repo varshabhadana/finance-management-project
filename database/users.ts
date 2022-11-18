@@ -120,3 +120,18 @@ export async function updateUser(
     `;
   return user;
 }
+
+// function to get user by email
+export async function getUserByNotificationTrue() {
+  const users = await sql`
+  SELECT
+    *
+  FROM
+    users
+  WHERE
+    users.notification='true'
+
+  `;
+
+  return users;
+}
