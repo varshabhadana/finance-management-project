@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import {
   CheckIcon,
   PencilIcon,
@@ -15,11 +14,6 @@ type Props = {
   setTransactions: any;
   transactions: TransactionData[];
 };
-const transactionStyles = css`
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 50px;
-`;
 
 export default function TransactionListItem({
   singleTransaction: {
@@ -27,7 +21,6 @@ export default function TransactionListItem({
     categoryName,
     amount,
     id,
-
     transactionTypeName,
   },
   transactionDeleteHandler,
