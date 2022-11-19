@@ -14,7 +14,7 @@ export default function DropdownPanel(props: Props) {
       <div>
         <button
           type="button"
-          className="flex justify-center items-center rounded-full bg-white rounded-full text-black text-lg w-12 h-12 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 "
+          className="flex justify-center items-center rounded-full bg-white rounded-full text-black text-lg w-12 h-12 focus:outline-none focus:ring-2 border-solid border-2 border-blue-600 focus:ring-offset-2 focus:ring-offset-gray-50 font-bold "
           id="user-menu-button"
           aria-expanded="false"
           aria-haspopup="true"

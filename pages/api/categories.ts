@@ -72,7 +72,7 @@ export default async function handler(
       });
     }
     const newCategory = await createNewCategory(name, created_by, type, logo);
-    console.log(newCategory);
+
     if (newCategory) {
       const { name, createdBy, type, logo, id } = newCategory;
       response.status(200).json({

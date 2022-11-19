@@ -45,7 +45,6 @@ export default function Register(props: Props) {
       (await registerResponse.json()) as RegisterResponseBody;
     if ('errors' in registerResponseBody) {
       setErrors(registerResponseBody.errors);
-      return console.log(registerResponseBody.errors);
     }
     const returnTo = router.query.returnTo;
     if (
@@ -122,7 +121,7 @@ export default function Register(props: Props) {
             <label htmlFor="password">Password</label>
             <input
               className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5"
-              type="text"
+              type="password"
               id="password"
               name="password"
               placeholder="Your password.."

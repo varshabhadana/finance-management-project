@@ -31,7 +31,7 @@ cron.schedule('* * * * *', async () => {
       text: 'I am sending an email from nodemailer!',
       html: `<b>Hey there ${el.firstName}! </b><p> This is a reminder to fill your income and expenses of the day<p/>`,
       to: el.email,
-      from: process.env.EMAIL,
+      from: process.env.REACTAPPEMAIL,
     });
   });
 });

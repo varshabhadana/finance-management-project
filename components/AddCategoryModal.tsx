@@ -65,7 +65,6 @@ export default function AddCategoryModal(props: Props) {
 
     if ('errors' in categoryResponseBody) {
       setErrors(categoryResponseBody.errors);
-      return console.log(categoryResponseBody.errors);
     }
   }
   return (
@@ -123,7 +122,6 @@ export default function AddCategoryModal(props: Props) {
                   required={true}
                   onChange={(event) => {
                     setNewCategoryName(event.currentTarget.value);
-                    console.log(newCategoryName);
                   }}
                 />
               </div>

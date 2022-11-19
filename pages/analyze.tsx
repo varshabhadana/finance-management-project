@@ -43,24 +43,6 @@ export default function Analyze(props: Props) {
       const today = new Date();
       const weekday = today.getDay();
       setPeriodNames(periodWeekly);
-
-      console.log(
-        periodWeekly.map(
-          (el, index) =>
-            periodWeekly[
-              Math.abs(
-                periodWeekly.length -
-                  Math.abs(periodWeekly.length - (weekday + index)),
-              )
-            ],
-        ),
-      );
-      /*    setPeriodNames(
-        periodNames.map(
-          (el, index) =>
-            periodNames[periodNames.length - Math.abs(weekday - index)],
-        ),
-      ); */
     } else {
       setSelectedDayRange(getPeriodRangeForlastyear(12));
 
@@ -159,12 +141,10 @@ export default function Analyze(props: Props) {
         'date',
       );
       const months = Object.keys(transactionsGroupedByMonth);
-      console.log('A', transactionsGroupedByMonth);
-      console.log('transactionForCharts', transactionForCharts);
 
       const transformedData = months.map((el) => {
         const data = getTotalIncomeAndExpense(transactionsGroupedByMonth, el);
-        console.log('data', data);
+
         return data;
       });
       const allMonthData = periodNames.map((el) =>
@@ -198,7 +178,6 @@ export default function Analyze(props: Props) {
         ) || 0,
     };
   }
-  console.log('chartData', chartData);
 
   return (
     <div className="w-full">
@@ -237,7 +216,7 @@ export default function Analyze(props: Props) {
               </ResponsiveContainer>
             </div>
 
-            <div className="flex w-5/12">
+            <div className="flex w-5/12 h-[500px]">
               <PieChartPanel transactions={transactions} />
             </div>
           </div>

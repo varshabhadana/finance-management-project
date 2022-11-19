@@ -64,7 +64,6 @@ export default function Transaction(props: Props) {
 
   const [selectedDayRange, setSelectedDayRange] =
     useState<DayRange>(defaultRange);
-  console.log(selectedDayRange);
 
   // to fetch transactions from database
   useEffect(() => {
@@ -87,7 +86,6 @@ export default function Transaction(props: Props) {
         );
         const data = await response.json();
         setTransactions(data);
-        console.log('data', data);
       };
       getTransaction();
     }
@@ -140,7 +138,7 @@ export default function Transaction(props: Props) {
     });
     setTransactions(filteredTransaction);
   }
-  console.log('transactions', transactions);
+
   return (
     <>
       <Head>
@@ -215,7 +213,7 @@ export default function Transaction(props: Props) {
 
       <div>
         {transactions.length > 0 ? (
-          <div>
+          <div className=" overflow-y-scroll h-[400px] ">
             {transactions.map((el) => (
               <TransactionListItem
                 key={el.id}

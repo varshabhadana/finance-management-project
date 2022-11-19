@@ -101,9 +101,9 @@ export default function TransactionListItem({
       ) : (
         <div>
           {transactionTypeName === 'expense' ? (
-            <label className="text-red-500"> - {amount} </label>
+            <label className="text-red-500 font-bold"> - {amount} </label>
           ) : (
-            <label className="text-green-500"> + {amount} </label>
+            <label className="text-green-500 font-bold"> + {amount} </label>
           )}
 
           <button
@@ -120,9 +120,6 @@ export default function TransactionListItem({
         </div>
       )}
 
-      {/*  <button onClick={() => {
-              updateAmountValue(id);
-            }}>SAVE</button> */}
       <button onClick={() => transactionDeleteHandler(id)}>
         <TrashIcon
           className="-ml-1 mr-2 h-5 w-5 text-gray-500"

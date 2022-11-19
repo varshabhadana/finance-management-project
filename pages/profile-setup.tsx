@@ -64,63 +64,65 @@ export default function ProfileSetup(props: Props) {
   }
 
   return (
-    <div className=" p-5  w-full h-screen gap-300 p-8 gap-6 bg-white sm:rounded-lg  ">
+    <div className="w-full h-screen gap-300 px-24 gap-6 bg-white sm:rounded-lg  ">
       <Head>
         <title>Profile</title>
         <meta name="description" content="Setup your profile" />
       </Head>
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900 text-left mt-2 ">
-        Welcome {firstNameUpperCase} !{' '}
-      </h1>
-      <div className="text-xl tracking-tight text-gray-900 mt-5 ">
-        1. Choose your avatar
-      </div>
-      <div css={imageStyles}>
-        {avatars.map((el) => {
-          return (
-            <button
-              onClick={() => setAvatar(el)}
-              css={css`
-                ${imageContainerStyles};
-                ${el === avatar && selectedImgStyles}
-              `}
-              key={el}
-            >
-              <Image
-                src={`/${el}.svg`}
-                alt={`avatar ${el}`}
-                width={200}
-                height={200}
-              />
-            </button>
-          );
-        })}
-      </div>
+      <div className="flex justify-center items-center flex-col w-full h-screen gap-300 p-8 gap-6 drop-shadow-2xl sm:rounded-lg shadow-xl  ">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900 text-left ">
+          Welcome {firstNameUpperCase} !{' '}
+        </h1>
+        <div className="text-xl tracking-tight text-gray-900 mt-5 ">
+          1. Choose your avatar
+        </div>
+        <div css={imageStyles}>
+          {avatars.map((el) => {
+            return (
+              <button
+                onClick={() => setAvatar(el)}
+                css={css`
+                  ${imageContainerStyles};
+                  ${el === avatar && selectedImgStyles}
+                `}
+                key={el}
+              >
+                <Image
+                  src={`/${el}.svg`}
+                  alt={`avatar ${el}`}
+                  width={200}
+                  height={200}
+                />
+              </button>
+            );
+          })}
+        </div>
 
-      <div className="flex m-2 flex-row gap-8">
-        <label className="text-xl tracking-tight text-gray-900  ">
-          2. Do you want a daily reminder to add your expenses?
-        </label>
+        <div className="flex m-2 flex-row gap-8">
+          <label className="text-xl tracking-tight text-gray-900  ">
+            2. Do you want a daily reminder to add your expenses?
+          </label>
 
-        <input
-          className="h-6 w-6 rounded border-gray-300 text-blue-600 focus:ring-blue-500 "
-          type="checkbox"
-          onClick={(event) => {
-            setNotification(event.currentTarget.checked);
-          }}
-        />
-      </div>
+          <input
+            className="h-6 w-6 rounded border-gray-300 text-blue-600 focus:ring-blue-500 "
+            type="checkbox"
+            onClick={(event) => {
+              setNotification(event.currentTarget.checked);
+            }}
+          />
+        </div>
 
-      <button
-        onClick={userAccountHandler}
-        className="flex w-1/12 justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mb-3 mt-4"
-      >
-        Next
-      </button>
-      <div className="text-rose-500 text-base space-y-2">
-        {errors.map((el) => {
-          return <p key={el.message}>{el.message}</p>;
-        })}
+        <button
+          onClick={userAccountHandler}
+          className="flex w-1/12 justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mb-3 mt-4"
+        >
+          Next
+        </button>
+        <div className="text-rose-500 text-base space-y-2">
+          {errors.map((el) => {
+            return <p key={el.message}>{el.message}</p>;
+          })}
+        </div>
       </div>
     </div>
   );

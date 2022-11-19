@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import DropdownPanel from './DropdownPanel';
 import { User } from './Layout';
@@ -12,7 +13,7 @@ type NavElementProps = {
 
 function NavbarElement(props: NavElementProps) {
   return (
-    <div className="hover:bg-slate-700 text-white text-xl rounded-md px-6 py-2">
+    <div className="hover:bg-slate-100 text-black text-xl rounded-md px-6 py-2">
       <Link href={`/${props.hrefName}`}>{props.label}</Link>
     </div>
   );
@@ -21,11 +22,11 @@ function NavbarElement(props: NavElementProps) {
 export default function Header(props: Props) {
   return (
     <header>
-      <nav className="mx-auto  px-2 sm:px-6 lg:px-8 bg-gray-800 text-white ">
+      <nav className="mx-auto  px-2 sm:px-6 lg:px-8  text-white ">
         <div className="relative flex h-16 items-center justify-between">
           <div className="flex justify-between w-full ">
-            <Link href={'/'} className="flex flex-shrink-0 items-center">
-              home
+            <Link href={'/'} className="flex flex-shrink-0 items-center ">
+              <Image src={'/logo.png'} width={100} height={60} />
             </Link>
             <div>
               {props.user ? (

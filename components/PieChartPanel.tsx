@@ -62,7 +62,6 @@ export default function PieChartPanel(props: Props) {
     );
 
     const categoryNames = Object.keys(groupedByCategoryName);
-    console.log(groupedByCategoryName);
 
     const transformedData = categoryNames.map((el) => {
       return {
@@ -73,7 +72,6 @@ export default function PieChartPanel(props: Props) {
         ),
       };
     });
-    console.log('transformedData', transformedData);
 
     setChartData(transformedData);
   }, [props.transactions, pieChartView]);

@@ -17,7 +17,7 @@ const buttonStyles = css`
 `;
 const selectedCategoryStyles = css`
   border-color: #1366e7;
-  border-width: 5px;
+  border-width: 4px;
 `;
 
 type Form = {
@@ -167,9 +167,9 @@ export default function Income(props: Props) {
         <label className="text-xl font-bold tracking-tight text-gray-900">
           1. Select a Category
         </label>
-        <div className="flex justify-between items-center ">
+        <div className="flex space-x-5 items-center h-[500px] ">
           {/*  // aplying map to display categories */}
-          <div className="flex overflow-x-scroll w-11/12 ">
+          <div className="flex overflow-x-scroll w-11/12 px-2 py-2">
             {categories?.map((el) => {
               return (
                 <div key={el.name}>
@@ -198,7 +198,7 @@ export default function Income(props: Props) {
           </div>
           <div>
             <button
-              className="text-2xl w-12 h-12 border-4 border-blue-500 rounded-full w-fit h-fit "
+              className="text-2xl w-12 h-12 border-4 border-blue-500 rounded-full w-fit h-fit font-bold text-blue-800"
               onClick={() => setOpenModal(true)}
             >
               +

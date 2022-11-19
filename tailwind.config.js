@@ -8,7 +8,7 @@ module.exports = {
     './public/**/*.html',
   ],
   theme: {
-    fontFamily: { nanumMyeongjo: ['Nanum Myeongjo'] },
+    fontFamily: { nanumMyeongjo: ['Nanum Myeongjo'], dmSans: ['DM Sans'] },
   },
   plugins: [require('flowbite/plugin')],
 };

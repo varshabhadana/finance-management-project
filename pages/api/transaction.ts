@@ -100,7 +100,7 @@ export default async function handler(
     const deleteTransaction = await deleteTransactionByTransactionsId(
       Number(request.query.transaction_id),
     );
-    console.log('transactionid', deleteTransaction);
+
     // check if user Id exist on database
     if (!deleteTransaction) {
       return response.status(400).json({

@@ -41,7 +41,6 @@ export default function Login(props: Props) {
     const loginResponseBody = (await loginResponse.json()) as LoginResponseBody;
     if ('errors' in loginResponseBody) {
       setErrors(loginResponseBody.errors);
-      return console.log(loginResponseBody.errors);
     }
     const returnTo = router.query.returnTo;
     if (
@@ -114,7 +113,7 @@ export default function Login(props: Props) {
                 <label htmlFor="password">Password</label>
                 <input
                   className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-blue-500 sm:text-sm mt-1.5"
-                  type="text"
+                  type="password"
                   id="password"
                   name="password"
                   value={loginForm.password}
