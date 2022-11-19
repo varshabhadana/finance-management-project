@@ -24,7 +24,7 @@ export default function Header(props: Props) {
     <header>
       <nav className="mx-auto  px-2 sm:px-6 lg:px-8  text-white ">
         <div className="relative flex h-16 items-center justify-between">
-          <div className="flex justify-between w-full ">
+          <div className="flex justify-between w-full cursor-pointer ">
             <Link href="/" className="flex flex-shrink-0 items-center ">
               <Image src="/logo.png" width={100} height={60} />
             </Link>

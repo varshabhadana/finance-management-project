@@ -156,7 +156,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (token && (await getValidSessionByToken(token))) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/private-profile',
         permanent: true,
       },
     };
