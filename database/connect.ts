@@ -1,7 +1,10 @@
 import { config } from 'dotenv-safe';
 import postgres from 'postgres';
 
-config();
+// This loads all environment variables from a .env file
+// for all code after this line
+if (process.env.NODE_ENV !== 'production') config();
+
 // Type needed for the connection function below
 declare module globalThis {
   let postgresSqlClient: ReturnType<typeof postgres> | undefined;
