@@ -1,7 +1,28 @@
+import '../styles/globals.css';
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import { css, Global } from '@emotion/react';
 import type { AppProps } from 'next/app';
+import { useCallback, useEffect, useState } from 'react';
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [user, setUser] = useState();
+  // to get user display on header from api
+  const refreshUserProfile = useCallback(async () => {
+    const profileResponse = await fetch('/api/profile');
+    const profileResponseBody = await profileResponse.json();
+
+    if ('error' in profileResponseBody) {
+      setUser(undefined);
+    } else {
+      setUser(profileResponseBody.user);
+    }
+  }, []);
+  // to display the user on first render
+  useEffect(() => {
+    refreshUserProfile().catch(() => console.log('fetch api failed'));
+  }, [refreshUserProfile]);
+
   return (
     <>
       <Global
@@ -18,7 +39,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         `}
       />
-      <Component {...pageProps} />
+      <Layout user={user}>
+        <Component {...pageProps} refreshUserProfile={refreshUserProfile} />
+      </Layout>
     </>
   );
 }
