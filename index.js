@@ -6,9 +6,9 @@ const fetch = require('node-fetch');
 // Create an instance of Express
 app = express();
 
-const testfunction = async () => {
+const fetchUsersWithNotification = async () => {
   const response = await fetch(
-    'http://localhost:3000/api/users',
+    'https://finance-management-project.fly.dev/api/users',
 
     {
       method: 'GET',
@@ -18,15 +18,13 @@ const testfunction = async () => {
     },
   );
   const data = await response.json();
-  console.log(data);
+
   return data;
 };
 // email scheduled for all the user subscribed for notification
 cron.schedule('* * * * *', async () => {
-  console.log('Tasked scheduled with 1 minute interval');
-  const usersWithMailSubscription = await testfunction();
-  console.log('here...');
-  console.log(usersWithMailSubscription);
+  const usersWithMailSubscription = await fetchUsersWithNotification();
+
   const filterdata = usersWithMailSubscription.users;
   filterdata.forEach((el) => {
     sendEmail({
