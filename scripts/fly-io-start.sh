@@ -38,3 +38,4 @@ fi
 
 yarn migrate up
 yarn start
+yarn start-server

@@ -18,12 +18,15 @@ const testfunction = async () => {
     },
   );
   const data = await response.json();
+  console.log(data);
   return data;
 };
 // email scheduled for all the user subscribed for notification
 cron.schedule('* * * * *', async () => {
   console.log('Tasked scheduled with 1 minute interval');
   const usersWithMailSubscription = await testfunction();
+  console.log('here...');
+  console.log(usersWithMailSubscription);
   const filterdata = usersWithMailSubscription.users;
   filterdata.forEach((el) => {
     sendEmail({
