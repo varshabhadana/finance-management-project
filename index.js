@@ -27,7 +27,7 @@ cron.schedule('* * * * *', async () => {
   const filterdata = usersWithMailSubscription.users;
   filterdata.forEach((el) => {
     sendEmail({
-      subject: 'Test',
+      subject: 'Reminder',
       text: 'I am sending an email from nodemailer!',
       html: `<b>Hey there ${el.firstName}! </b><p> This is a reminder to fill your income and expenses of the day<p/>`,
       to: el.email,
