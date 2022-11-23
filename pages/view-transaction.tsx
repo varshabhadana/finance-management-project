@@ -156,8 +156,9 @@ export default function Transaction(props: Props) {
       </div>
 
       {/*  // toggle calender visibility */}
-      <div className="flex items-center justify-center relative">
+      <div className="flex items-center justify-center relative ">
         <button
+          className="flex rounded-md hover:bg-slate-100 p-2 "
           onClick={() => {
             setIsCalenderOpen(!isCalenderOpen);
           }}
@@ -167,6 +168,7 @@ export default function Transaction(props: Props) {
             className="-ml-1 mr-2 h-5 w-5 text-blue-500  "
             aria-hidden="true"
           />
+          <p className="font-semibold">Select Date</p>
         </button>
 
         {/* // calender to filter transaction by date */}

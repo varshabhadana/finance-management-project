@@ -28,10 +28,10 @@ export default function Settings({
           <div className="overflow-hidden w-9/12 h-full bg-white shadow-xl sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Applicant Information
+                User Information
               </h3>
               <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Personal details and application.
+                Personal details of the user.
               </p>
             </div>
             <div className="border-t border-gray-200">

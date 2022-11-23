@@ -39,7 +39,7 @@ export default function UserProfile({
                     User Information
                   </h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                    Personal details and application.
+                    Personal details of the user.
                   </p>
                 </div>
                 <div className="border-t border-gray-200">
