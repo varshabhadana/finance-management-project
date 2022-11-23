@@ -19,11 +19,16 @@ const Home: NextPage = () => {
           height={600}
         />
         <div className="w-4/12 flex flex-col justify-center ">
-          <h1 className="text-5xl font-semibold font-dmSans ">
+          <h1 className="text-5xl font-semibold font-dmSans text-blue-600  ">
+            Hisaab
+          </h1>
+          <br />
+          <br />
+          <h2 className="text-5xl font-semibold font-dmSans ">
             Let's make money
             <br />
             management easy
-          </h1>
+          </h2>
           <br />
           <p className="text-xl text-left">
             Tired of figuring out where your money went?

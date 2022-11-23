@@ -23,6 +23,7 @@ const fetchUsersWithNotification = async () => {
 };
 // email scheduled for all the user subscribed for notification
 cron.schedule('* * * * *', async () => {
+  console.log('Tasked scheduled with 1 minute interval');
   const usersWithMailSubscription = await fetchUsersWithNotification();
 
   const filterdata = usersWithMailSubscription.users;
