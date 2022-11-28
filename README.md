@@ -68,7 +68,7 @@ Visit the deployed site of **Hisaab** [here](https://finance-management-project.
 - Setup the database by downloading and installing PostgreSQL
 - Create a user and a database
 - Create a new file .env
-- Create OAuth 2.0 API Credential sand store it in your .env with a variable name CLIENTID, CLIENTSECRET, REFRESHTOKEN
+- Create OAuth 2.0 API Credential and store it in your .env with a variable name CLIENTID, CLIENTSECRET, REFRESHTOKEN
 - Copy the environment variables from .env-example into .env
 - Replace the placeholders xxxxx with your username, password and name of database
 - Install dotenv-cli with `yarn add dotenv-cli`
