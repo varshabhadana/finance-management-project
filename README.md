@@ -1,34 +1,92 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hisaab
 
-## Getting Started
+## Description
 
-First, run the development server:
+Hisaab is a Full stack web application which will help you manage your finance by adding your daily income and expenses. User can visualise data with the help of graphs and can also subscribe for daily email reminder.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Visit the deployed site of **Hisaab** [here](https://finance-management-project.fly.dev/).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies used
+- Next.js
+- Typescript
+- React
+- PostgreSQL
+- Node.js
+- Emotion
+- Tailwind CSS
+- REST API
+- Google API 
+- Recharts
+- Nodemailer
+- Nodecron
+- Figma
+- DrawSQL
+- Jest
+- Playwright
+- Fly.io
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Features
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Authentication: registration and login 
+- Logout
+- User can choose an avatar and subscribe for email reminder.
+- Add entry for Income and Expense by selecting Category, add amount, date and description. 
+   - User can also create their own category
+- Fiter: User can filter the transaction by selecting date or for last week and last month. 
+- User can edit and delete the transaction amount from the list.
+- User can analyze their transaction with bar graph, pie-chart and line chart for last week and last year.
+- User will get a daily email reminder to fill their income and expenses.
+- User can view their personal information on user profile page.
+- User can update the email reminder on settings page.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Screenshots
+### Landing Page
+![Screenshot 2022-11-28 002949](https://user-images.githubusercontent.com/106388649/204165736-ce938048-bc41-4b99-a490-7797bbfdda84.png)
+### Profile Setup
+![Screenshot 2022-11-28 004016](https://user-images.githubusercontent.com/106388649/204165949-98281618-9362-4adf-bf01-c650ec028422.png)
+### Transaction Page
+![Screenshot 2022-11-28 004203](https://user-images.githubusercontent.com/106388649/204166057-a6b9122e-b1f4-4be5-850a-0da4c6e96795.png)
+### Add Transaction
+![Screenshot 2022-11-28 010055](https://user-images.githubusercontent.com/106388649/204167060-ad54bb01-6c7b-4311-ab19-e8cf5ef9fb95.png)
+### Create New Category
+![Screenshot 2022-11-28 010324](https://user-images.githubusercontent.com/106388649/204167092-8e655337-5371-44dd-9019-ccf48d20463b.png)
+### Filter Transaction
+![Screenshot 2022-11-28 010756](https://user-images.githubusercontent.com/106388649/204167326-309ec1da-2904-4fad-a3e3-915bd70d4c20.png)
 
-## Learn More
+### Analyze
+![Screenshot 2022-11-28 010159](https://user-images.githubusercontent.com/106388649/204167121-42621269-b560-4150-adb5-3cc624b5b545.png)
 
-To learn more about Next.js, take a look at the following resources:
+## Database Schema in DrwaSQL
+![Screenshot 2022-11-28 004638](https://user-images.githubusercontent.com/106388649/204166292-e9f7767f-d3c7-425c-8115-bfee6fcd0a83.png)
+## Wireframing in [Figma](https://www.figma.com/file/hF3RqGeVFdAsVkk2henjps/Untitled?node-id=0%3A1&t=lqXIs4PSAURWPlqe-1)
+![Screenshot 2022-11-28 005053](https://user-images.githubusercontent.com/106388649/204166418-8cfc0a26-19c0-45cf-98e4-2f0501155c91.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Setup instructions
 
-## Deploy on Vercel
+- Clone the repository with `git clone <repo>`
+- Setup the database by downloading and installing PostgreSQL
+- Create a user and a database
+- Create a new file .env
+- Create OAuth 2.0 API Credential sand store it in your .env with a variable name CLIENTID, CLIENTSECRET, REFRESHTOKEN
+- Copy the environment variables from .env-example into .env
+- Replace the placeholders xxxxx with your username, password and name of database
+- Install dotenv-cli with `yarn add dotenv-cli`
+- Run `yarn install` in your command line
+- Run the migrations with `yarn migrate up`
+- Start the server by running `yarn dev`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy on fly.io
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Generate a Fly.io Token, called _GitHub Actions Deploy Token_ and copy the text
+- Create a new repository secret in the GitHub repo, named FLY_API_TOKEN
+- Log into Fly.io on the command line: `flyctl auth login`
+- Create an app `flyctl apps create --name <app name>`
+- Create the Fly.io config files
+- Add database credentials using Fly.io secrets
+  `flyctl secrets set PGHOST=localhost PGDATABASE=$(openssl rand -hex 16) PGUSERNAME=upleveled$(openssl rand -hex 16) PGPASSWORD=$(openssl rand -base64 32)`
+- Add built time environment variables to the config files (fly.toml, Dockerfile) as described [here](https://fly.io/docs/languages-and-frameworks/nextjs/#what-about-build-time-environment-variables)
+- Create a 1GB volume for the PostgreSQL database in Frankfurt
+  `flyctl volumes create postgres --size 1 --region fra`
+- Deploy: `flyctl deploy`
+
