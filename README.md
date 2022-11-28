@@ -85,7 +85,6 @@ Visit the deployed site of **Hisaab** [here](https://finance-management-project.
 - Create the Fly.io config files
 - Add database credentials using Fly.io secrets
   `flyctl secrets set PGHOST=localhost PGDATABASE=$(openssl rand -hex 16) PGUSERNAME=upleveled$(openssl rand -hex 16) PGPASSWORD=$(openssl rand -base64 32)`
-- Add built time environment variables to the config files (fly.toml, Dockerfile) as described [here](https://fly.io/docs/languages-and-frameworks/nextjs/#what-about-build-time-environment-variables)
 - Create a 1GB volume for the PostgreSQL database in Frankfurt
   `flyctl volumes create postgres --size 1 --region fra`
 - Deploy: `flyctl deploy`
