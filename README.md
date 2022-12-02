@@ -32,7 +32,7 @@ Visit the deployed site of **Hisaab** [here](https://finance-management-project.
 - User can choose an avatar and subscribe for email reminder.
 - Add entry for Income and Expense by selecting Category, add amount, date and description. 
    - User can also create their own category
-- Fiter: User can filter the transaction by selecting date or for last week and last month. 
+- Filter: User can filter the transaction by selecting date or for last week and last month. 
 - User can edit and delete the transaction amount from the list.
 - User can analyze their transaction with bar graph, pie-chart and line chart for last week and last year.
 - User will get a daily email reminder to fill their income and expenses.
